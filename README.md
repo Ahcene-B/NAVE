@@ -13,6 +13,8 @@ and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
 
 > **If you use nave-xai in your work, please cite the paper** (see [Citation](#citation)).
 
+![NAVE explanations](https://raw.githubusercontent.com/Ahcene-B/NAVE/main/docs/assets/example.png)
+
 ## Install
 
 ```bash
