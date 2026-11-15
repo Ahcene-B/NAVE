@@ -1,4 +1,4 @@
-# nave-xai
+# Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation
 
 **NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
