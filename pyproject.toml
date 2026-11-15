@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nave-xai"
+version = "0.1.0"
+description = "NAVE (Neuro-Activated Vision Explanations): concept-based explanations of vision encoders."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Ahcène Boubekki" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.23",
+    "onnxruntime>=1.19",          # first version supporting numpy 2
+    "matplotlib>=3.6",
+]
+keywords = ["time series", "text", "explainable-ai", "xai", "interpretability", "concepts", "vision-encoder", "vision-transformer", "resnet", "dino", "superpixels"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+
+[project.optional-dependencies]
+text = ["spacy>=3.7"]        # model="spacy": then python -m spacy download en_core_web_sm
+torch = ["torch>=2.0"]
+test = ["pytest>=7", "scikit-learn>=1.2"]
+docs = [
+    "mkdocs>=1.6,<2",
+    "mkdocs-material>=9",
+    "mkdocstrings[python]>=0.24",
+    "pymdown-extensions>=12; python_version >= '3.11'",       # with mkdocstrings >= 1.0.7
+    "pymdown-extensions>=10,<12; python_version < '3.11'",    # with mkdocstrings <= 1.0.6
+]
+
+[project.urls]
+Homepage = "https://github.com/Ahcene-B/NAVE"
+Documentation = "https://ahcene-b.github.io/NAVE/"
+Paper = "https://arxiv.org/abs/2411.19700"
+
+[tool.hatch.build]
+artifacts = ["src/nave_xai/models/weights/*.npz"]      # shipped weights: git-ignored but packaged
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nave_xai"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", "notebooks", "tools", "README.md", "LICENSE", "CITATION.cff", "CHANGELOG.md", "RELEASING.md", "mkdocs.yml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,8 +1,140 @@
-# NAVE: Neuro-Activated Vision Explanations
+# nave-xai
 
-Code for the paper **"Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation"**.
+**NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
-> Ahcène Boubekki, Samuel G. Fadel, Sebastian Mair
+`nave-xai` is the official package of **NAVE** (Neuro-Activated Vision Explanations), from
+[*Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation*](https://arxiv.org/abs/2411.19700)
+by Ahcène Boubekki, Samuel G. Fadel and Sebastian Mair.
 
-We will populate the repository before the conference.
-It will include code to reproduce each experiments and figures.
+NAVE explains the **encoder**, not a prediction. It combines the feature activations of a frozen
+encoder at several depths, extracts concepts from them, and returns an explanation map: how the
+encoder decomposes the image, before any classifier gets involved. It is post-hoc, unsupervised
+and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
+
+> **If you use nave-xai in your work, please cite the paper** (see [Citation](#citation)).
+
+## Install
+
+```bash
+pip install nave-xai               # works offline: ViT-Ti/16 (ImageNet) is shipped with the package
+pip install "nave-xai[torch]"      # explain your own PyTorch models (GPU too)
+```
+
+## Explain an image
+
+```python
+from nave_xai import NAVEImage
+
+explainer = NAVEImage()                        # ViT-Ti/16, ImageNet weights
+exp = explainer.explain(image)            # (H, W, 3) array or PIL image
+
+exp.explanation                           # (H, W) the concept of every pixel
+exp.segmentation()                        # (H, W) connected regions, like skimage's slic
+exp.border(width=1)                       # (H, W) 0/1 inner margin of every region
+```
+
+Draw it with any tool, e.g. matplotlib: `plt.imshow(explainer.palette[exp.explanation])`.
+One concept can appear in several places: in a bird image, the scattered background shares one
+concept; in a chest X-ray, both lungs do.
+
+## Concepts across a dataset
+
+```python
+explainer = NAVEImage(model="resnet50", k=10).fit(images)          # one set of concepts for all images
+explanations = explainer.predict(test_images)                  # the same concepts in every image
+
+explainer.prototypes      # (K, D) concept prototypes
+explainer.patches         # (K, 2, 32, 32, 3) closest and largest cell of every concept
+explainer.classes         # predicted classes (or the groups given to fit)
+explainer.correlation     # (K, C) correlation of concept proportions with the classes
+
+explainer.fit(images, groups=labels)            # one projector per group (the paper's protocol)
+explainer.reorder(by="classes", recolor=True)   # concepts grouped and coloured by class
+explainer.summarize(image, saliency=True)       # a figure in the style of the paper's Figure 1
+```
+
+## Time series and text
+
+The same method explains sequence encoders, with one concept per time step or per token:
+
+```python
+from nave_xai import NAVESeries, NAVEText
+
+series_explainer = NAVESeries(my_1d_cnn, layers=["block3", "block4", "block5"], k=20).fit(recordings)
+series_explainer.summarize(recordings[0])        # channels over the segmentation, snippets, profiles
+
+text_explainer = NAVEText("spacy").fit(documents)  # pip install "nave-xai[text]"
+text_explainer.summarize(documents[0])           # tokens on their concept's colour, concept table
+```
+
+See [Time series](docs/series.md) and [Text](docs/text.md).
+
+## Choose what to explain
+
+| Model | Trainings | Layers by default |
+|---|---|---|
+| `"vitt16"` (ViT-Ti/16, shipped) | random, imagenet | N:12 (last block) |
+| `"resnet18"`, `"resnet50"` | random, imagenet (+ dino for ResNet50) | N34 |
+| `"vits16"` (ViT-S/16) | random, imagenet, dino | N:12 |
+
+```python
+NAVEImage(model="resnet50", layers="N234")          # or layers=[2, 3, 4]
+NAVEImage(model="vits16", training="dino", layers="N:9-12")
+NAVEImage(projector="bayesian", k=100)              # learns how many concepts are needed
+NAVEImage(projector="pca")                          # principal components as concepts
+```
+
+Shallow layers carry fine detail and edges, deep layers abstract semantics; NAVE's composite pixels
+combine both. Your own PyTorch models, ONNX files and plain functions work too, see
+[Your own models](docs/custom-models.md).
+
+## Documentation
+
+- [Getting started](docs/getting-started.md)
+- [How NAVE works](docs/concepts.md)
+- [Fitting on a dataset](docs/datasets.md)
+- [Time series](docs/series.md)
+- [Text](docs/text.md)
+- [Inspecting models](docs/inspecting.md)
+- [Your own models](docs/custom-models.md)
+- [Memory and large images](docs/memory.md)
+- [API reference](docs/api.md)
+- [Demo notebook](notebooks/demo.ipynb), [time series](notebooks/series.ipynb), [text](notebooks/text.ipynb)
+
+## Citation
+
+If you use nave-xai, please cite the paper:
+
+> Ahcène Boubekki, Samuel G. Fadel, Sebastian Mair.
+> *Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation.*
+> arXiv:2411.19700, 2024. https://arxiv.org/abs/2411.19700
+
+```bibtex
+@article{boubekki2024nave,
+  title   = {Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation},
+  author  = {Boubekki, Ahc{\`e}ne and Fadel, Samuel G. and Mair, Sebastian},
+  journal = {arXiv preprint arXiv:2411.19700},
+  year    = {2024}
+}
+```
+
+Some features go beyond the paper:
+- overlapping windows for large images;
+- Bayesian k-means;
+- the uncertainty map;
+- the saliency procedure.
+
+Results with them are not those reported in the paper.
+
+## Weights and licenses
+
+nave-xai is released under the MIT license (see `LICENSE`). Pretrained weights keep their own
+licenses:
+
+- ViT-Ti/16 (shipped) and ViT-S/16 ImageNet: Touvron et al., *Training data-efficient image
+  transformers* (DeiT, Apache-2.0), via timm
+- ResNet18 / ResNet50 ImageNet: torchvision (BSD-3-Clause), via timm on Hugging Face
+- DINO ResNet50 and ViT-S/16: Caron et al., *Emerging Properties in Self-Supervised Vision
+  Transformers* (Apache-2.0)
+
+Dependencies: numpy (BSD-3-Clause), onnxruntime (MIT), matplotlib (matplotlib license, BSD-style).
