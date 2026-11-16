@@ -184,15 +184,17 @@ class NAVEText(_SequenceBase):
 
     # -- summary -----------------------------------------------------------------------------------
     def summarize(self, text, uncertainty=True, saliency=False, classifier=None, target=None, label=None,
-                  title=None):
+                  title=None, saliency_range=(-1, 1)):
         """The figure for one document: the text wrapped, each token on its concept's colour,
         the background's opacity = certainty; with saliency=True, the font size shows the
         saliency's magnitude and black / white its sign. Then the correlation of the concepts
         with the classes, and one row per concept: colour | spans and mean run | characteristic
         words | two closest spans in context.
-        label : the document's true class, shown with the model's prediction (when it predicts)."""
+        label : the document's true class, shown with the model's prediction (when it predicts).
+        saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+            cosine), or "auto": centred on 0, up to the item's largest |saliency|"""
         from ._figure_sequence import headline, text_summary
-        from ._figure_sequence import concept_saliency
+        from ._figure_sequence import concept_saliency, saliency_range as sal_range
         tokens = self._prepare(text)
         exp = self.explain([tokens], uncertainty=uncertainty)[0]
         try:
@@ -202,4 +204,5 @@ class NAVEText(_SequenceBase):
         mean_sal = concept_saliency(exp.explanation, sal, exp.K) if (sal is not None and self.correlation is None) else None
         head = headline(self.class_names, self._predict_class(tokens), label)
         return text_summary(self, tokens, exp, sal if saliency else None,
-                            title or ("Document" + (f"   ({head})" if head else "")), mean_sal)
+                            title or ("Document" + (f"   ({head})" if head else "")), mean_sal,
+                            sal_range(saliency_range, sal))

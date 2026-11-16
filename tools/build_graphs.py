@@ -172,6 +172,10 @@ def build_vit(path, dim=384, depth=12, heads=6, mlp=1536, patch=16):
         qkv = g.op("Transpose", [g.op("Reshape", [linear(g, h, f"{p}.attn.qkv", dim, 3 * dim), s_qkv])],
                    perm=[2, 0, 3, 1, 4])                                         # 3, 1, heads, n, hd
         q, k, v = [g.op("Squeeze", [part, idx[0]]) for part in g.split(qkv, 3, axis=0)]
+        keys = g.op("Reshape", [g.op("Transpose", [k], perm=[0, 2, 1, 3]), s_tok])   # 1, n, dim (heads concatenated)
+        g.op("Reshape", [g.op("Transpose", [g.op("Slice", [keys] + sl)], perm=[0, 2, 1]), grid_shape], out=f"k{i + 1}")
+        outs.append(f"k{i + 1}")
+        shapes.append([1, dim, "h", "w"])
         att = g.op("Mul", [g.op("MatMul", [q, g.op("Transpose", [k], perm=[0, 1, 3, 2])]), scale])
         o = g.op("MatMul", [g.op("Softmax", [att], axis=-1), v])                  # 1, heads, n, hd
         o = g.op("Reshape", [g.op("Transpose", [o], perm=[0, 2, 1, 3]), s_tok])

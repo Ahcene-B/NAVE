@@ -48,6 +48,26 @@ def headline(names, predicted, label):
     return "   |   ".join(parts)
 
 
+def saliency_range(spec, values=None):
+    """(vmin, vmax) for saliency: a (vmin, vmax) tuple as given, or "auto": centred on 0, up to the
+    largest |value|."""
+    if isinstance(spec, str):
+        if spec != "auto":
+            raise ValueError('saliency_range must be "auto" or a (vmin, vmax) tuple.')
+        v = np.asarray(values, np.float64) if values is not None else np.zeros(1)
+        h = float(np.nanmax(np.abs(v))) if np.isfinite(v).any() else 1.0
+        h = max(h, 1e-9)
+        return -h, h
+    lo, hi = float(spec[0]), float(spec[1])
+    if not lo < hi:
+        raise ValueError("saliency_range must have vmin < vmax.")
+    return lo, hi
+
+
+def _ticks(lo, hi):
+    return [lo, 0.0, hi] if lo < 0 < hi else [lo, hi]
+
+
 def _concept_matrix(fig, ax, ex, M, row_labels, concepts, n_cols, colorbar, cmap="coolwarm", vmin=-1, vmax=1,
                     ticks=(-1, 0, 1)):
     """A (rows x concepts) matrix, each column headed by the concept's colour and number."""
@@ -94,19 +114,19 @@ def concept_saliency(labels, saliency, K):
         return np.where(n > 0, np.bincount(lab, weights=sal, minlength=K) / n, np.nan)
 
 
-def _mean_saliency_axes(fig, ax, ex, mean_sal, concepts, n_cols, colorbar):
-    """One row: the mean saliency of every concept in this image / series / document, on [-1, 1]."""
+def _mean_saliency_axes(fig, ax, ex, mean_sal, concepts, n_cols, colorbar, rng=(-1.0, 1.0)):
+    """One row: the mean saliency of every concept in this image / series / document."""
     _concept_matrix(fig, ax, ex, mean_sal[None], ["mean\nsaliency"], concepts, n_cols, colorbar, cmap="seismic",
-                    vmin=-1, vmax=1, ticks=(-1, 0, 1))
+                    vmin=rng[0], vmax=rng[1], ticks=_ticks(*rng))
 
 
-def concept_row(fig, ax, ex, R, classes, mean_sal, concepts, n_cols, first, why):
+def concept_row(fig, ax, ex, R, classes, mean_sal, concepts, n_cols, first, why, rng=(-1.0, 1.0)):
     """The row under a summary's explanation: correlation if available, else the concepts' mean
     saliency in this item, else a note."""
     if R is not None:
         _correlation_axes(fig, ax, ex, R, classes, concepts, n_cols, colorbar=first)
     elif mean_sal is not None:
-        _mean_saliency_axes(fig, ax, ex, mean_sal, concepts, n_cols, colorbar=first)
+        _mean_saliency_axes(fig, ax, ex, mean_sal, concepts, n_cols, colorbar=first, rng=rng)
     else:
         _note(ax, why if first else "")
 
@@ -120,7 +140,7 @@ NO_CLASSES = "no correlation (it needs several items and classes) and no salienc
 
 
 # -- series ------------------------------------------------------------------------------------
-def series_summary(ex, x, exp, sal, span, title, mean_sal=None):
+def series_summary(ex, x, exp, sal, span, title, mean_sal=None, rng=(-1.0, 1.0)):
     import matplotlib.pyplot as plt
     a, b = (0, x.shape[1]) if span is None else (int(span[0]), int(span[1]))
     sig, labels = x[:, a:b], exp.explanation[a:b]
@@ -134,8 +154,9 @@ def series_summary(ex, x, exp, sal, span, title, mean_sal=None):
     blocks = [np.arange(K)[i:i + n_cols] for i in range(0, K, n_cols)]
     band_h = 0.38 * C + 0.5                                                # snippets and profile: room per channel
     heights = [0.6] * C + ([0.35] if unc is not None else []) + ([0.35] if sal is not None else [])
+    heights += [0.5, max(0.5, 0.24 * nC) if nC else (0.45 if mean_sal is not None else 0.25)]   # one row, all concepts
     for _ in blocks:
-        heights += [0.5, max(0.5, 0.24 * nC) if nC else (0.45 if mean_sal is not None else 0.25), 0.85, band_h, band_h]
+        heights += [0.3, 0.85, band_h, band_h]
     fig = plt.figure(figsize=(FIG_WIDTH, sum(heights) + 1.2))
     H = fig.get_figheight()
     g = fig.add_gridspec(len(heights), 1, height_ratios=heights, hspace=0.3, left=LEFT, right=RIGHT,
@@ -167,21 +188,22 @@ def series_summary(ex, x, exp, sal, span, title, mean_sal=None):
         row += 1
     if sal is not None:                                                   # the time axis goes under the last row
         ax = fig.add_subplot(g[row])
-        im = ax.imshow(sal[a:b][None], aspect="auto", cmap="seismic", vmin=-1, vmax=1, extent=(a, b, 0, 1))
-        pos = ax.get_position()                                           # a cosine: always on [-1, 1]
+        im = ax.imshow(sal[a:b][None], aspect="auto", cmap="seismic", vmin=rng[0], vmax=rng[1], extent=(a, b, 0, 1))
+        pos = ax.get_position()
         cb = fig.colorbar(im, cax=fig.add_axes([RIGHT + 0.01, pos.y0, 0.012, pos.height]))
-        cb.set_ticks([-1, 0, 1])
+        cb.set_ticks(_ticks(*rng))
         cb.ax.tick_params(labelsize=6, length=2)
         ax.set_yticks([])
         ax.set_ylabel("saliency", rotation=0, ha="right", va="center", fontsize=8)
         ax.tick_params(labelsize=7, length=2)
         row += 1
 
+    row += 1                                                              # a gap
+    ax = fig.add_subplot(g[row])
+    concept_row(fig, ax, ex, R, classes, mean_sal, np.arange(K), K, True, NO_CLASSES, rng)
+    row += 1
     for bi, concepts in enumerate(blocks):
         row += 1                                                          # a gap
-        ax = fig.add_subplot(g[row])
-        concept_row(fig, ax, ex, R, classes, mean_sal, concepts, n_cols, bi == 0, NO_CLASSES)
-        row += 1
         sub = g[row:row + 3].subgridspec(3, n_cols, wspace=0.1, hspace=0.12, height_ratios=[0.85, band_h, band_h])
         for j, k in enumerate(concepts):
             col = pal[k]
@@ -244,7 +266,7 @@ def _span(ax, x, y, tokens, a, b, colour, context=4, max_chars=54):
         used += len(t) + 1
 
 
-def text_summary(ex, tokens, exp, sal, title, mean_sal=None):
+def text_summary(ex, tokens, exp, sal, title, mean_sal=None, rng=(-1.0, 1.0)):
     """Document (font size = |saliency|, black/white = its sign, background opacity = certainty),
     then the correlation matrix, then one row per concept."""
     import matplotlib.pyplot as plt
@@ -259,7 +281,7 @@ def text_summary(ex, tokens, exp, sal, title, mean_sal=None):
     sizes = np.full(len(tokens), DOC_PT)
     colours = ["black"] * len(tokens)
     if sal is not None:
-        mag = np.clip(np.abs(sal), 0, 1)                                  # a cosine: on the absolute [0, 1] scale
+        mag = np.clip(np.abs(sal) / max(abs(rng[0]), abs(rng[1])), 0, 1)  # on the chosen range's scale
         sizes = DOC_MIN + (DOC_MAX - DOC_MIN) * mag
         colours = ["black" if v >= 0 else "white" for v in sal]
     alpha = 1.0 - np.clip(unc, 0, 1) if unc is not None else np.ones(len(tokens))
@@ -301,7 +323,7 @@ def text_summary(ex, tokens, exp, sal, title, mean_sal=None):
             ax.text(x0, y, t, va="center", family=MONO, fontsize=sizes[i], color=colours[i])
 
     ax = fig.add_subplot(g[1])
-    concept_row(fig, ax, ex, R, classes, mean_sal, np.arange(K), K, True, NO_CLASSES)
+    concept_row(fig, ax, ex, R, classes, mean_sal, np.arange(K), K, True, NO_CLASSES, rng)
 
     ax = fig.add_subplot(g[2])
     n_y = 2 + K * 3

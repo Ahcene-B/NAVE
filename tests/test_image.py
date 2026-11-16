@@ -203,3 +203,22 @@ def test_windowed_image(rng):
     assert ex.classes is not None                                          # windows' logits, weighted
     s = ex.saliency((rng.random((1300, 1100, 3)) * 255).astype(np.uint8), target=0)
     assert s.shape == (1300, 1100)                                         # run at <= 1024 px, resized back
+
+
+def test_vit_keys(small):
+    from nave_xai.models import weights as W
+    ex = NAVEImage("vitt16", "random", layers="N:9-12", k=4, features="keys")
+    exp = ex.explain(small)
+    assert ex.layers_ == ["k9", "k12"] and ex._token_layers == ["b9", "b12"]
+    assert exp.explanation.shape == small.shape[:2]
+    bb = ex.backbone                                     # keys of block 12 = LN(block 11's output) x W_k + b_k
+    x = np.random.default_rng(1).normal(size=(1, 3, 224, 160)).astype(np.float32)
+    o = bb(x, ["b11", "k12"])
+    w = W.random_weights(W.load_spec("vitt16"), 0)
+    tok = o["b11"][0].reshape(192, -1).T
+    ln = (tok - tok.mean(1, keepdims=True)) / np.sqrt(tok.var(1, keepdims=True) + 1e-6)
+    ln = ln * w["blocks.11.norm1.weight"] + w["blocks.11.norm1.bias"]
+    keys = ln @ w["blocks.11.attn.qkv.weight"][192:384].T + w["blocks.11.attn.qkv.bias"][192:384]
+    assert np.allclose(keys, o["k12"][0].reshape(192, -1).T, atol=1e-4)
+    with pytest.raises(ValueError):
+        NAVEImage("resnet18", "random", features="keys").explain(small)

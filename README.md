@@ -1,4 +1,4 @@
-# Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation
+# nave-xai
 
 **NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
@@ -12,8 +12,6 @@ encoder decomposes the image, before any classifier gets involved. It is post-ho
 and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
 
 > **If you use nave-xai in your work, please cite the paper** (see [Citation](#citation)).
-
-![NAVE explanations](https://raw.githubusercontent.com/Ahcene-B/NAVE/main/docs/assets/example.png)
 
 ## Install
 
@@ -84,6 +82,7 @@ NAVEImage(model="resnet50", layers="N234")          # or layers=[2, 3, 4]
 NAVEImage(model="vits16", training="dino", layers="N:9-12")
 NAVEImage(projector="bayesian", k=100)              # learns how many concepts are needed
 NAVEImage(projector="pca")                          # principal components as concepts
+NAVEImage(model="vits16", training="dino", features="keys")   # ViTs: attention keys instead of block outputs
 ```
 
 Shallow layers carry fine detail and edges, deep layers abstract semantics; NAVE's composite pixels

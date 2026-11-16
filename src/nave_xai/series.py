@@ -180,14 +180,16 @@ class NAVESeries(_SequenceBase):
 
     # -- summary ---------------------------------------------------------------------------------
     def summarize(self, series, uncertainty=False, saliency=False, span=None, classifier=None, target=None,
-                  label=None):
+                  label=None, saliency_range=(-1, 1)):
         """The figure for one series: one row per channel (the signal over the segmentation),
         an uncertainty row (if asked; inferno reversed: bright = certain, black = uncertain),
         a saliency row (if asked), the correlation of the
         concepts with the classes, and per concept: position & duration, snippets, profile
         (one band per channel), 10 concepts per row. span=(start, end) zooms on a part.
-        label : the series' true class, shown with the model's prediction (when it predicts)."""
-        from ._figure_sequence import concept_saliency, headline, series_summary
+        label : the series' true class, shown with the model's prediction (when it predicts).
+        saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+            cosine), or "auto": centred on 0, up to the item's largest |saliency|"""
+        from ._figure_sequence import concept_saliency, headline, saliency_range as sal_range, series_summary
         x = self._prepare(series)
         exp = self.explain(series, uncertainty=uncertainty)
         try:
@@ -196,4 +198,5 @@ class NAVESeries(_SequenceBase):
             sal = None
         mean_sal = concept_saliency(exp.explanation, sal, exp.K) if (sal is not None and self.correlation is None) else None
         return series_summary(self, x, exp, sal if saliency else None, span,
-                              headline(self.class_names, self._predict_class(x), label), mean_sal)
+                              headline(self.class_names, self._predict_class(x), label), mean_sal,
+                              sal_range(saliency_range, sal))

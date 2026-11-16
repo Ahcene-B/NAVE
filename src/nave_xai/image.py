@@ -90,6 +90,9 @@ class NAVEImage(_ConceptsBase):
         window, each pixel from the window whose centre is nearest), None (always whole), or a
         window size in px
     window_factor : see `window`
+    features : built-in ViTs: "tokens" (the blocks' outputs, default) or "keys" (the attention keys
+        of the same blocks, as in LOST and TokenCut). Saliency and class predictions always use
+        the blocks' outputs, which the classifier reads.
     fit_on : "all" (every composite pixel: exact if they fit in memory, else streamed through
         mini-batch k-means, with a warning) or "sample" (`sample_size` composite pixels)
     sample_size : composite pixels used with fit_on="sample" (and to seed streaming)
@@ -128,7 +131,7 @@ class NAVEImage(_ConceptsBase):
                  bayes_alpha=1.0, bayes_iter=200, bayes_burn_in=100, upsample="cubic", window="auto",
                  fit_on="all", sample_size=20000, epochs=1, normalize=True, scale=True,
                  uncertainty_temp=0.1, transforms="default", classifier=None, class_names=None,
-                 window_factor=3, seed=0, device="cpu", progress=False):
+                 window_factor=3, features="tokens", seed=0, device="cpu", progress=False):
         check_mode(upsample)
         if fit_on not in ("all", "sample"):
             raise ValueError("fit_on must be 'all' or 'sample'.")
@@ -138,7 +141,7 @@ class NAVEImage(_ConceptsBase):
         self.sample_size, self.epochs, self.normalize, self.scale = sample_size, epochs, normalize, scale
         self.uncertainty_temp, self.transforms = uncertainty_temp, transforms
         self.classifier, self.class_names = classifier, class_names
-        self.window_factor = window_factor
+        self.window_factor, self.features = window_factor, features
         self.seed, self.device, self.progress = seed, device, progress
         self.fitted = False
         self.prototypes = self.palette = self.patches = self.classes = self.correlation = None
@@ -151,6 +154,16 @@ class NAVEImage(_ConceptsBase):
         if self._backbone is None:
             self._backbone = get_backbone(self.model, self.training, self.seed, self.device)
             self.layers_ = self._backbone.resolve_blocks(self.layers)
+            self._token_layers = list(self.layers_)               # what the classifier reads (saliency, classes)
+            if self.features == "keys":
+                from .models.backbone import BuiltinBackbone
+                bb = self._backbone
+                if not (isinstance(bb, BuiltinBackbone) and bb.name.startswith("vit")):
+                    raise ValueError('features="keys" is available for the built-in ViTs ("vitt16", "vits16"); '
+                                     'for your own models, name the layer to read (e.g. a key projection).')
+                self.layers_ = ["k" + n[1:] for n in self.layers_]  # the attention keys of the same blocks
+            elif self.features != "tokens":
+                raise ValueError('features must be "tokens" or "keys".')
         return self._backbone
 
     def _transform(self, rgb):
@@ -198,7 +211,7 @@ class NAVEImage(_ConceptsBase):
             return
         H, W = max(shapes, key=lambda s: s[0] * s[1])[:2]
         tiling = self._tiling(H, W)
-        ids = [bb.blocks.index(n) + 1 for n in self.layers_]
+        ids = [bb.blocks.index(n) + 1 for n in self._token_layers]
         need = memory.estimate(bb.name, ids, tiling.tile_h, tiling.tile_w, tiling.n, H * W, self.k, True,
                                self.fit_on == "all", uncertainty, self.sample_size)
         memory.warn_if_too_large(need, memory.advice(bb.name, ids, None if tiling.n == 1 else tiling.tile_h))
@@ -447,13 +460,13 @@ class NAVEImage(_ConceptsBase):
         clf, bb = self.classifier, self.backbone
         x = normalize_image(window, bb.mean, bb.std) if window.dtype == np.uint8 else \
             np.ascontiguousarray(window.transpose(2, 0, 1)[None], np.float32)
-        names = list(self.layers_)
+        names = list(self._token_layers)
         if clf is None and isinstance(bb, BuiltinBackbone):
             names += [n for n in [bb.blocks[-1], *bb.extra_outputs] if n not in names]
         maps = bb(x, names)
         if clf is not None:
             head = as_head(clf)
-            feat = bb.head_features(maps[self.layers_[-1]][0])
+            feat = bb.head_features(maps[self._token_layers[-1]][0])
             pooled = feat.reshape(feat.shape[0], -1).mean(1)
             return head["weight"] @ pooled + (0 if head["bias"] is None else head["bias"])
         try:
@@ -553,7 +566,7 @@ class NAVEImage(_ConceptsBase):
                 f = 1024 / max(H, W)
                 h, w = max(1, int(H * f)), max(1, int(W * f))
                 net = resize(net, h, w) if net.dtype == np.uint8 else resample(net, h, w, "linear")
-            res = concept_saliency(net, self.backbone, self.layers_, self.k,
+            res = concept_saliency(net, self.backbone, self._token_layers, self.k,
                                    classifier=classifier if classifier is not None else self.classifier,
                                    target=target, upsample=self.upsample, normalize=self.normalize,
                                    scale=self.scale, clusterer=self.projector, alpha=self.bayes_alpha,
@@ -566,7 +579,7 @@ class NAVEImage(_ConceptsBase):
         return out[0] if single else out
 
     def summarize(self, image, correlation=True, uncertainty=False, saliency=False, patches="closest",
-                  classifier=None, target=None, label=None):
+                  classifier=None, target=None, label=None, saliency_range=(-1, 1)):
         """A figure in the style of the paper's Figure 1, for one image.
 
         Row 1: the image | its explanation (uncertainty as opacity on white if asked) | its saliency
@@ -574,11 +587,13 @@ class NAVEImage(_ConceptsBase):
         Then, for every block of 10 concepts: their correlation with the classes (if available and
         asked) and their patches ("closest" or "largest"), framed in the concept's colour.
         Returns the matplotlib Figure.
+        saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+            cosine), or "auto": centred on 0, up to the item's largest |saliency|
         """
         from ._figure import summarize as draw_summary
         if patches not in KINDS:
             raise ValueError(f"patches must be one of {KINDS}.")
-        from ._figure_sequence import concept_saliency, headline
+        from ._figure_sequence import concept_saliency, headline, saliency_range as sal_range
         exp = self.explain(image, uncertainty=uncertainty)
         rgb, net = self._prepare(image)
         need = saliency or (correlation and self.correlation is None)    # no correlation: mean saliency instead
@@ -590,5 +605,6 @@ class NAVEImage(_ConceptsBase):
             if (sal is not None and correlation and self.correlation is None) else None
         predicted = self._predict_class(rgb, net) if self._can_predict() else None
         title = headline(self.class_names, predicted, label)
+        rng = sal_range(saliency_range, sal)
         return draw_summary(self, rgb, exp, sal if saliency else None, correlation, KINDS.index(patches), title,
-                            mean_sal)
+                            mean_sal, rng)

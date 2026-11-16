@@ -6,6 +6,7 @@ First release.
 
 - `NAVESeries` (time series, 1D CNNs and transformers) and `NAVEText` (one concept per token; spaCy's
   encoder built in with the `text` extra), sharing the projectors, ordering and colours of images.
+- Built-in ViTs: `features="keys"` reads the attention keys of the chosen blocks.
 - `NAVEImage`: one object for everything. `explain` (fits afresh on the images unless `fit` was called),
   `fit`, `predict`, `fit_predict`, `segment`, `reorder`, `set_palette`, `update_patches`,
   `saliency` and `summarize` (a figure in the style of the paper's Figure 1).

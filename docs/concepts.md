@@ -27,6 +27,11 @@ NAVE (Algorithm 1 of the paper) combines the chosen layers per position:
 5. **Project** the composite pixels onto K concepts.
 
 The paper's notation names the layers: N34 is blocks 3 and 4; N:9-12 is blocks 9 and 12.
+
+For the built-in ViTs, `features="keys"` reads the attention **keys** of the chosen blocks instead of
+their outputs: each block's input after its layer norm, through the key projection, before attention
+mixes the tokens. This is what LOST and TokenCut use for object discovery with DINO. Saliency and class
+predictions still use the blocks' outputs, which the classifier reads.
 `normalize=False` and `scale=False` reproduce the paper's ablations.
 
 ## Projectors

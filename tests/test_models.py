@@ -94,7 +94,7 @@ def test_graph_matches_reference(model, rng):
     options = ort.SessionOptions()
     options.add_external_initializers(names, [ort.OrtValue.ortvalue_from_numpy(Wt[n]) for n in names])
     session = ort.InferenceSession(f"{W.GRAPH_DIR}/{model}.onnx", options, providers=["CPUExecutionProvider"])
-    blocks = [o.name for o in session.get_outputs() if o.name != "cls"]
+    blocks = [o.name for o in session.get_outputs() if o.name.startswith("b")]   # block outputs (not keys, not cls)
     out = session.run(blocks, feeds)
     ref = _resnet18(x[0], Wt) if model == "resnet18" else _vit(x[0], Wt, feeds["pos_embed"])
     for o, r in zip(out, ref):

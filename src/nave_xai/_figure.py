@@ -7,6 +7,8 @@ patches, framed in the concept's colour, one per correlation column.
 """
 import numpy as np
 
+from ._figure_sequence import _ticks, concept_row
+
 from ._layout import FIG_WIDTH, LEFT, RIGHT, columns
 
 CLASS_LIMIT = 30
@@ -44,7 +46,7 @@ def _spines_off(ax):
         ax.spines[side].set_visible(False)
 
 
-def summarize(explainer, rgb, exp, saliency, show_correlation, kind, title="", mean_sal=None):
+def summarize(explainer, rgb, exp, saliency, show_correlation, kind, title="", mean_sal=None, rng=(-1.0, 1.0)):
     import matplotlib.pyplot as plt
     from .interp import resample
 
@@ -61,8 +63,9 @@ def summarize(explainer, rgb, exp, saliency, show_correlation, kind, title="", m
     column = (RIGHT - LEFT) * width / n_cols                          # inches per concept
     heights = [3.4]
     show_row = show_correlation or mean_sal is not None
-    for _ in blocks:
-        heights += ([max(0.6, 0.24 * C) + 0.25 if show_correlation else 0.7] if show_row else []) + [min(column, 1.4)]
+    if show_row:                                                       # one row for all concepts
+        heights += [max(0.6, 0.24 * C) + 0.25 if show_correlation else 0.7]
+    heights += [min(column, 1.4)] * len(blocks)                        # patches: rows of up to 10
     fig = plt.figure(figsize=(width, sum(heights) + 0.6 * len(heights) + (0.35 if title else 0)))
     top_in = 0.75 if title else 0.4                                    # room for the title above the panels' own
     grid = fig.add_gridspec(len(heights), 1, height_ratios=heights, hspace=0.45, left=LEFT, right=RIGHT,
@@ -87,26 +90,25 @@ def summarize(explainer, rgb, exp, saliency, show_correlation, kind, title="", m
         if saliency.shape != rgb.shape[:2]:
             saliency = resample(saliency, rgb.shape[0], rgb.shape[1], "linear")
         ax = fig.add_subplot(top[2])
-        im = ax.imshow(saliency, cmap="seismic", vmin=-1, vmax=1)          # a cosine: always on [-1, 1]
+        im = ax.imshow(saliency, cmap="seismic", vmin=rng[0], vmax=rng[1])
         ax.set_title("saliency", fontsize=10)
         _clean(ax)
         pos = ax.get_position()                                             # outside the right margin
         bar = fig.colorbar(im, cax=fig.add_axes([RIGHT + 0.01, pos.y0, 0.012, pos.height]))
-        bar.set_ticks([-1, 0, 1])
+        bar.set_ticks(_ticks(*rng))
         bar.ax.tick_params(labelsize=7)
 
     # per block of concepts: correlation (classes x concepts, each column headed by the concept's
     # colour and number, as in the series and text summaries), then the patches
-    from ._figure_sequence import concept_row
     row = 1
+    if show_row:
+        ax = fig.add_subplot(grid[row])
+        concept_row(fig, ax, explainer, R if show_correlation else None, classes, mean_sal, np.arange(K), K,
+                    True, "", rng)
+        if show_correlation:
+            ax.set_ylabel("class", fontsize=9)
+        row += 1
     for b, concepts in enumerate(blocks):
-        if show_row:
-            ax = fig.add_subplot(grid[row])
-            concept_row(fig, ax, explainer, R if show_correlation else None, classes, mean_sal, concepts, n_cols,
-                        b == 0, "")
-            if show_correlation:
-                ax.set_ylabel("class", fontsize=9)
-            row += 1
         ax = fig.add_subplot(grid[row])
         ax.imshow(_patch_strip(explainer.patches, palette, kind, concepts, n_cols), aspect="auto",
                   interpolation="nearest", extent=(0, n_cols, 1, 0))
