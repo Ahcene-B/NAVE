@@ -91,7 +91,7 @@ def summarize(explainer, rgb, exp, saliency, show_correlation, kind, title="", m
             saliency = resample(saliency, rgb.shape[0], rgb.shape[1], "linear")
         ax = fig.add_subplot(top[2])
         im = ax.imshow(saliency, cmap="seismic", vmin=rng[0], vmax=rng[1])
-        ax.set_title("saliency", fontsize=10)
+        ax.set_title("NAVE saliency", fontsize=10)
         _clean(ax)
         pos = ax.get_position()                                             # outside the right margin
         bar = fig.colorbar(im, cax=fig.add_axes([RIGHT + 0.01, pos.y0, 0.012, pos.height]))
