@@ -2,6 +2,8 @@
 
 ## 0.1.2
 
+- The GIMP 3 plugin in `gimp/`, with the package's model graphs (its ViT graph now works on
+  onnxruntime 1.20 and newer).
 - Animated demo notebooks (`notebooks/animations/`), shown in the notebook and saved as GIFs:
   - `01_vit_blocks.ipynb`: a ViT's patch tokens block by block, with UMAP (the last block or the
     previous one as reference), coloured by the last block's concepts, and optionally the NAVE

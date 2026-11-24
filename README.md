@@ -91,6 +91,13 @@ Shallow layers carry fine detail and edges, deep layers abstract semantics; NAVE
 combine both. Your own PyTorch models, ONNX files and plain functions work too, see
 [Your own models](docs/custom-models.md).
 
+## GIMP plugin
+
+[`gimp/`](gimp/) holds a GIMP 3 plugin, **Filters › Generic › NAVE Superpixels…**, that adds NAVE's segment
+borders, average-coloured segments or concept colours to an image as new layers, with ResNet18, ResNet50 or
+ViT-S/16 (random, ImageNet or DINO weights). It runs on its own: no torch, and it sets up a private Python
+with numpy and onnxruntime on first use. See [`gimp/README.md`](gimp/README.md) for installation.
+
 ## Documentation
 
 - [Getting started](docs/getting-started.md)
