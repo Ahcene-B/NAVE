@@ -27,7 +27,7 @@ setting at the top; set it to `"random"` to try it without downloading.
 ## Animations (`animations/`)
 
 Animated demos (`pip install "nave-xai[animation]"`). Every sequence starts at the input of the first block
-(`b0`); UMAPs follow the previous frame by default, with the last frame as an alternative reference; the
+(`b0`); UMAPs keep each frame close to the previous one (`AlignedUMAP`); all panels are always shown; the
 explanations of several images are computed once, so `IMAGE` only changes the drawing.
 
 Runs on a CPU, no training:
@@ -45,5 +45,5 @@ With PyTorch training on a GPU (each downloads its dataset once):
 - `02_resnet34_training.ipynb`: a ResNet34 learning Imagenette, checkpoint by checkpoint.
 - `07_shortcut.ipynb`: two classes, a mark at random places on one; a model trained with the mark and one without.
 - `08_finetuning.ipynb`: an ImageNet ResNet34 fine-tuned on EuroSAT, with CKA per block from the stem.
-- `09_overfitting.ipynb`: 5% of Imagenette; a training image and a validation image side by side.
+- `09_overfitting.ipynb`: few images of two classes; a training image and a validation image side by side.
 - `10_imbalance.ipynb`: one class ten times rarer: how many concepts each class gets.
