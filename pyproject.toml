@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "nave-xai"
-version = "0.1.0"
+version = "0.1.2"
 description = "NAVE (Neuro-Activated Vision Explanations): concept-based explanations of vision encoders."
 readme = "README.md"
 license = "MIT"
@@ -27,6 +27,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
+animation = ["umap-learn>=0.5.4", "scikit-image>=0.21"]   # notebooks/animations
 text = ["spacy>=3.7"]        # model="spacy": then python -m spacy download en_core_web_sm
 torch = ["torch>=2.0"]
 test = ["pytest>=7", "scikit-learn>=1.2"]
@@ -41,7 +42,7 @@ docs = [
 [project.urls]
 Homepage = "https://github.com/Ahcene-B/NAVE"
 Documentation = "https://ahcene-b.github.io/NAVE/"
-Paper = "https://arxiv.org/abs/2411.19700"
+Paper = "https://doi.org/10.1007/978-3-032-37664-0_26"
 
 [tool.hatch.build]
 artifacts = ["src/nave_xai/models/weights/*.npz"]      # shipped weights: git-ignored but packaged

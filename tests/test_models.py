@@ -94,7 +94,7 @@ def test_graph_matches_reference(model, rng):
     options = ort.SessionOptions()
     options.add_external_initializers(names, [ort.OrtValue.ortvalue_from_numpy(Wt[n]) for n in names])
     session = ort.InferenceSession(f"{W.GRAPH_DIR}/{model}.onnx", options, providers=["CPUExecutionProvider"])
-    blocks = [o.name for o in session.get_outputs() if o.name.startswith("b")]   # block outputs (not keys, not cls)
+    blocks = [o.name for o in session.get_outputs() if o.name.startswith("b") and o.name != "b0"]   # block outputs
     out = session.run(blocks, feeds)
     ref = _resnet18(x[0], Wt) if model == "resnet18" else _vit(x[0], Wt, feeds["pos_embed"])
     for o, r in zip(out, ref):
@@ -207,3 +207,26 @@ def test_existing_caches_are_found(tmp_path, monkeypatch):
     assert W.find_existing("vits16", "dino").endswith("model.safetensors")
     assert W.find_existing("resnet50", "dino").endswith("dino_resnet50_pretrain.pth")
     assert W.find_existing("vits16", "imagenet") is None
+
+
+def test_b0_is_the_input_of_block_1(rng):
+    from nave_xai.models import weights as W
+    from nave_xai.models.backbone import BuiltinBackbone
+    x = rng.normal(size=(1, 3, 64, 64)).astype(np.float32)
+    res = BuiltinBackbone("resnet18", "random", seed=0)                 # ResNet: the stem, up to the max-pool
+    Wt = W.random_weights(W.load_spec("resnet18"), 0)
+    s = np.maximum(_bn(_conv(x[0], Wt["conv1.weight"], s=2, p=3), Wt, "bn1"), 0)
+    sp = np.pad(s, ((0, 0), (1, 1), (1, 1)), constant_values=-np.inf)
+    h, w = s.shape[1] // 2, s.shape[2] // 2
+    stem = np.max(np.stack([sp[:, i:i + 2 * h:2, j:j + 2 * w:2] for i in range(3) for j in range(3)]), 0)
+    assert np.allclose(res(x, ["b0"])["b0"][0], stem, atol=1e-4)
+    vit = BuiltinBackbone("vitt16", "random", seed=0)                    # ViT: patch embedding + position
+    Wv = W.random_weights(W.load_spec("vitt16"), 0)
+    def embedding(img):
+        p = img[0].reshape(3, 4, 16, 4, 16).transpose(1, 3, 0, 2, 4).reshape(16, -1)
+        return p @ Wv["patch_embed.proj.weight"].reshape(192, -1).T + Wv["patch_embed.proj.bias"]
+    y = rng.normal(size=(1, 3, 64, 64)).astype(np.float32)
+    pos_x = vit(x, ["b0"])["b0"][0].reshape(192, -1).T - embedding(x)
+    pos_y = vit(y, ["b0"])["b0"][0].reshape(192, -1).T - embedding(y)
+    assert np.allclose(pos_x, pos_y, atol=1e-4)                         # what remains is the position embedding
+    assert vit.resolve_blocks(["b3", "b0", 1]) == ["b0", "b1", "b3"]

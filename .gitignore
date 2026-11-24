@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+site/
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+
+# shipped weights: made by tools/fetch_shipped_weights.py before building, not committed
+src/nave_xai/models/weights/*.npz

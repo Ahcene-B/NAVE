@@ -6,7 +6,7 @@
     >>> exp = explainer.explain(image)           # fits on this image, then explains it
     >>> exp.explanation                          # (H, W) concept of every pixel
 
-NAVE (Boubekki, Fadel, Mair, arXiv:2411.19700) combines the feature maps of several layers into
+NAVE (Boubekki, Fadel, Mair, ECML PKDD 2026) combines the feature maps of several layers into
 composite pixels (Algorithm 1) and projects them onto K concepts (k-means by default).
 """
 import math
@@ -211,7 +211,7 @@ class NAVEImage(_ConceptsBase):
             return
         H, W = max(shapes, key=lambda s: s[0] * s[1])[:2]
         tiling = self._tiling(H, W)
-        ids = [bb.blocks.index(n) + 1 for n in self._token_layers]
+        ids = [bb.blocks.index(n) + 1 if n in bb.blocks else 1 for n in self._token_layers]
         need = memory.estimate(bb.name, ids, tiling.tile_h, tiling.tile_w, tiling.n, H * W, self.k, True,
                                self.fit_on == "all", uncertainty, self.sample_size)
         memory.warn_if_too_large(need, memory.advice(bb.name, ids, None if tiling.n == 1 else tiling.tile_h))

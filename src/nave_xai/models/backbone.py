@@ -69,6 +69,7 @@ class Backbone:
         if not names:
             raise ValueError("Choose at least one block.")
         order = {n: i for i, n in enumerate(self.blocks)}
+        order["b0"] = -1                                   # the input of block 1 comes first
         return sorted(dict.fromkeys(names), key=lambda n: order.get(n, len(order)))
 
     def _index_name(self, i):
@@ -78,6 +79,7 @@ class Backbone:
 
     def _accepts(self, name):
         return False
+
 
     # -- classifier support (saliency) --------------------------------------
     def head(self):
@@ -125,6 +127,9 @@ def _session(path, names, values):
 
 class BuiltinBackbone(Backbone):
     """ResNet18, ResNet50 or ViT-S/16 run by onnxruntime with injected weights."""
+
+    def _accepts(self, name):
+        return _builtin_accepts(self, name)
 
     def __init__(self, model, training="imagenet", seed=0, progress=None):
         import onnxruntime as ort
@@ -237,3 +242,8 @@ class FunctionBackbone(Backbone):
         if not self.blocks:
             self.blocks = list(out)
         return {n: np.asarray(out[n], np.float32) for n in names}
+
+
+def _builtin_accepts(self, name):
+    """Built-in models also expose the input of block 1 ("b0") and, for ViTs, the keys ("k1", ...)."""
+    return name == "b0" or (self.name.startswith("vit") and name[:1] == "k" and name[1:].isdigit())

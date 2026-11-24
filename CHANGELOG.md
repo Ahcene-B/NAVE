@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.2
+
+- Animated demo notebooks (`notebooks/animations/`), shown in the notebook and saved as GIFs:
+  - `01_vit_blocks.ipynb`: a ViT's patch tokens block by block, with UMAP (the last block or the
+    previous one as reference), coloured by the last block's concepts, and optionally the NAVE
+    explanation, uncertainty and NAVE saliency of an image at every block, from the block outputs and
+    from the attention keys; a section following the artifact tokens;
+  - `03` to `10`: augmentation, supervised against self-supervised, an image atlas of the tokens, the
+    artifact tokens, a learned shortcut, fine-tuning with CKA, overfitting, class imbalance;
+  - sliders (`ipywidgets`) in the ViT and training notebooks;
+  - `02_resnet34_training.ipynb`: a ResNet34 trained from scratch on Imagenette, the same views from
+    one checkpoint to the next, with the probe accuracy.
+- Built-in models: `b0`, the input of block 1 (ResNets: the stem's output; ViTs: patch and position
+  embeddings), usable as a layer.
+- `animation` extra: `pip install "nave-xai[animation]"` (umap-learn, scikit-image).
+- Built-in ViTs: `features="keys"`; summaries: `saliency_range`, `label=`, mean saliency per concept
+  when there is no correlation, fixed width.
+
 ## 0.1.0
 
 First release.

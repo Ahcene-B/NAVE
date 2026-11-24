@@ -91,8 +91,8 @@ def conv_bn(g, x, prefix_conv, prefix_bn, cin, cout, k, stride, relu):
 def build_resnet50(path):
     g = Graph()
     x = conv_bn(g, "image", "conv1", "bn1", 3, 64, 7, 2, True)
-    x = g.op("MaxPool", [x], kernel_shape=[3, 3], strides=[2, 2], pads=[1, 1, 1, 1])
-    cin, outs, shapes = 64, [], []
+    x = g.op("MaxPool", [x], kernel_shape=[3, 3], strides=[2, 2], pads=[1, 1, 1, 1], out="b0")   # input of block 1
+    cin, outs, shapes = 64, ["b0"], [[1, 64, "h0", "w0"]]
     for li, (blocks, planes, stride) in enumerate([(3, 64, 1), (4, 128, 2), (6, 256, 2), (3, 512, 2)], 1):
         for bi in range(blocks):
             p, s = f"layer{li}.{bi}", stride if bi == 0 else 1
@@ -113,8 +113,8 @@ def build_resnet18(path):
     """torchvision ResNet18: BasicBlocks of two 3x3 convs, [2, 2, 2, 2]."""
     g = Graph()
     x = conv_bn(g, "image", "conv1", "bn1", 3, 64, 7, 2, True)
-    x = g.op("MaxPool", [x], kernel_shape=[3, 3], strides=[2, 2], pads=[1, 1, 1, 1])
-    cin, outs, shapes = 64, [], []
+    x = g.op("MaxPool", [x], kernel_shape=[3, 3], strides=[2, 2], pads=[1, 1, 1, 1], out="b0")   # input of block 1
+    cin, outs, shapes = 64, ["b0"], [[1, 64, "h0", "w0"]]
     for li, (planes, stride) in enumerate([(64, 1), (128, 2), (256, 2), (512, 2)], 1):
         for bi in range(2):
             p, s = f"layer{li}.{bi}", stride if bi == 0 else 1
@@ -160,12 +160,13 @@ def build_vit(path, dim=384, depth=12, heads=6, mlp=1536, patch=16):
     s_tok = g.const("s_tok", [0, 0, dim])
     sl = [g.const(k, v) for k, v in [("sl_start", [1]), ("sl_end", [2 ** 62]), ("sl_axes", [1])]]
     scale = g.const("attn_scale", [hd ** -0.5], TensorProto.FLOAT)
+    g.op("Reshape", [g.op("Transpose", [g.op("Slice", [x] + sl)], perm=[0, 2, 1]), grid_shape], out="b0")   # input of block 1
     half = g.const("c_half", [0.5], TensorProto.FLOAT)
     one = g.const("c_one", [1.0], TensorProto.FLOAT)
     rsqrt2 = g.const("c_rsqrt2", [2 ** -0.5], TensorProto.FLOAT)
     idx = [g.const("i0", [0])]
 
-    outs, shapes = [], []
+    outs, shapes = ["b0"], [[1, dim, "h", "w"]]
     for i in range(depth):
         p = f"blocks.{i}"
         h = layer_norm(g, x, f"{p}.norm1", dim)

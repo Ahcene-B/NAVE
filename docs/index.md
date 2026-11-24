@@ -3,7 +3,7 @@
 **NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
 nave-xai is the official package of **NAVE** (Neuro-Activated Vision Explanations), from
-[*Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation*](https://arxiv.org/abs/2411.19700)
+[*Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation*](https://doi.org/10.1007/978-3-032-37664-0_26) (ECML PKDD 2026)
 by Ahcène Boubekki, Samuel G. Fadel and Sebastian Mair.
 
 NAVE explains the encoder, not a prediction. It combines a frozen encoder's feature activations
@@ -14,11 +14,18 @@ decomposes the image, before any classifier. Post-hoc, unsupervised, for CNNs an
     If you use nave-xai, please cite the paper:
 
     ```bibtex
-    @article{boubekki2024nave,
-      title   = {Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation},
-      author  = {Boubekki, Ahc{\`e}ne and Fadel, Samuel G. and Mair, Sebastian},
-      journal = {arXiv preprint arXiv:2411.19700},
-      year    = {2024}
+    @inproceedings{boubekki2026nave,
+      author    = {Boubekki, Ahc{\`e}ne and Fadel, Samuel G. and Mair, Sebastian},
+      editor    = {Ceci, Michelangelo and Kocev, Dragi and Monreale, Anna and Vens, Celine and Flach, Peter
+                   and Manco, Giuseppe and Spiliopoulou, Myra and Masciari, Elio},
+      title     = {Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation},
+      booktitle = {Machine Learning and Knowledge Discovery in Databases. Research Track},
+      publisher = {Springer Nature Switzerland},
+      address   = {Cham},
+      pages     = {449--467},
+      year      = {2026},
+      doi       = {10.1007/978-3-032-37664-0_26},
+      isbn      = {978-3-032-37664-0}
     }
     ```
 
@@ -35,3 +42,7 @@ exp.explanation          # (H, W) the concept of every pixel
 - New here? Start with [Getting started](getting-started.md).
 - The method: [How NAVE works](concepts.md).
 - NAVE as a diagnostic tool: [Inspecting models](inspecting.md).
+
+## Acknowledgments
+
+We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible.

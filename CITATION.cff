@@ -7,8 +7,8 @@ repository-code: "https://github.com/Ahcene-B/NAVE"
 authors:
   - name: "Ahcène Boubekki"
 preferred-citation:
-  type: article
-  title: "Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation"
+  type: conference-paper
+  title: "Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation"
   authors:
     - family-names: Boubekki
       given-names: Ahcène
@@ -16,6 +16,13 @@ preferred-citation:
       given-names: Samuel G.
     - family-names: Mair
       given-names: Sebastian
-  journal: "arXiv preprint arXiv:2411.19700"
-  year: 2024
-  url: "https://arxiv.org/abs/2411.19700"
+  collection-title: "Machine Learning and Knowledge Discovery in Databases. Research Track"
+  conference:
+    name: "ECML PKDD 2026"
+  publisher:
+    name: "Springer Nature Switzerland"
+  start: 449
+  end: 467
+  year: 2026
+  doi: "10.1007/978-3-032-37664-0_26"
+  url: "https://doi.org/10.1007/978-3-032-37664-0_26"

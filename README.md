@@ -3,13 +3,15 @@
 **NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
 `nave-xai` is the official package of **NAVE** (Neuro-Activated Vision Explanations), from
-[*Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation*](https://arxiv.org/abs/2411.19700)
+[*Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation*](https://doi.org/10.1007/978-3-032-37664-0_26) (ECML PKDD 2026)
 by Ahcène Boubekki, Samuel G. Fadel and Sebastian Mair.
 
 NAVE explains the **encoder**, not a prediction. It combines the feature activations of a frozen
 encoder at several depths, extracts concepts from them, and returns an explanation map: how the
 encoder decomposes the image, before any classifier gets involved. It is post-hoc, unsupervised
 and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
+
+![NAVE explanations](https://raw.githubusercontent.com/Ahcene-B/NAVE/main/docs/assets/example.png)
 
 > **If you use nave-xai in your work, please cite the paper** (see [Citation](#citation)).
 
@@ -100,22 +102,28 @@ combine both. Your own PyTorch models, ONNX files and plain functions work too, 
 - [Your own models](docs/custom-models.md)
 - [Memory and large images](docs/memory.md)
 - [API reference](docs/api.md)
+- [Animated demos](notebooks/animations/): encoders block by block, models during training, shortcuts, fine-tuning
 - [Demo notebook](notebooks/demo.ipynb), [time series](notebooks/series.ipynb), [text](notebooks/text.ipynb)
 
 ## Citation
 
 If you use nave-xai, please cite the paper:
 
-> Ahcène Boubekki, Samuel G. Fadel, Sebastian Mair.
-> *Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation.*
-> arXiv:2411.19700, 2024. https://arxiv.org/abs/2411.19700
+> Ahcène Boubekki, Samuel G. Fadel, Sebastian Mair. *Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation.* Machine Learning and Knowledge Discovery in Databases (ECML PKDD), Research Track, Springer, 2026, pp. 449–467. https://doi.org/10.1007/978-3-032-37664-0_26
 
 ```bibtex
-@article{boubekki2024nave,
-  title   = {Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation},
-  author  = {Boubekki, Ahc{\`e}ne and Fadel, Samuel G. and Mair, Sebastian},
-  journal = {arXiv preprint arXiv:2411.19700},
-  year    = {2024}
+@inproceedings{boubekki2026nave,
+  author    = {Boubekki, Ahc{\`e}ne and Fadel, Samuel G. and Mair, Sebastian},
+  editor    = {Ceci, Michelangelo and Kocev, Dragi and Monreale, Anna and Vens, Celine and Flach, Peter
+               and Manco, Giuseppe and Spiliopoulou, Myra and Masciari, Elio},
+  title     = {Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation},
+  booktitle = {Machine Learning and Knowledge Discovery in Databases. Research Track},
+  publisher = {Springer Nature Switzerland},
+  address   = {Cham},
+  pages     = {449--467},
+  year      = {2026},
+  doi       = {10.1007/978-3-032-37664-0_26},
+  isbn      = {978-3-032-37664-0}
 }
 ```
 
@@ -126,6 +134,10 @@ Some features go beyond the paper:
 - the saliency procedure.
 
 Results with them are not those reported in the paper.
+
+## Acknowledgments
+
+We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible.
 
 ## Weights and licenses
 

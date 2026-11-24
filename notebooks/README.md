@@ -23,3 +23,27 @@ NAVE as a diagnostic tool, following Sections 4 and 5 of the paper:
 
 The first run downloads the pretrained weights. Every notebook has a `TRAINING` (or `DINO`)
 setting at the top; set it to `"random"` to try it without downloading.
+
+## Animations (`animations/`)
+
+Animated demos (`pip install "nave-xai[animation]"`). Every sequence starts at the input of the first block
+(`b0`); UMAPs follow the previous frame by default, with the last frame as an alternative reference; the
+explanations of several images are computed once, so `IMAGE` only changes the drawing.
+
+Runs on a CPU, no training:
+
+- `01_encoder_blocks.ipynb`: inside an encoder (ViT or ResNet), block by block, block outputs and keys, the
+  artifact tokens of ViTs.
+- `03_augmentation.ipynb`: does the explanation survive rotation, zoom, colour shifts, noise, blur?
+- `04_supervised_vs_selfsupervised.ipynb`: ImageNet and DINO training, for ViT-S/16 and ResNet50, side by side
+  (downloads the weights, about 90 MB each).
+- `05_image_atlas.ipynb`: UMAP of the tokens as a scatter (the chosen photo in colour) and as an atlas of patches.
+- `06_artifacts.ipynb`: the artifact tokens of ViTs: norm, uncertainty, relation to the other concepts.
+
+With PyTorch training on a GPU (each downloads its dataset once):
+
+- `02_resnet34_training.ipynb`: a ResNet34 learning Imagenette, checkpoint by checkpoint.
+- `07_shortcut.ipynb`: two classes, a mark at random places on one; a model trained with the mark and one without.
+- `08_finetuning.ipynb`: an ImageNet ResNet34 fine-tuned on EuroSAT, with CKA per block from the stem.
+- `09_overfitting.ipynb`: 5% of Imagenette; a training image and a validation image side by side.
+- `10_imbalance.ipynb`: one class ten times rarer: how many concepts each class gets.

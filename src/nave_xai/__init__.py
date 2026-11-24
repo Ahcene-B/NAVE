@@ -6,8 +6,8 @@ feature activations at several depths and shows how the encoder decomposes an im
 the official package of
 
     Ahcene Boubekki, Samuel G. Fadel, Sebastian Mair.
-    Multi-Depth Concept Extraction for Post-Hoc Vision Encoder Explanation.
-    arXiv:2411.19700
+    Multi-depth Concept Extraction for Post-Hoc Vision Encoder Explanation.
+    ECML PKDD 2026, Springer, pp. 449-467. https://doi.org/10.1007/978-3-032-37664-0_26
 
 Please cite the paper if you use this package in your work.
 
@@ -22,7 +22,7 @@ from .image import ImageExplanation, NAVEImage
 from .series import NAVESeries, SeriesExplanation
 from .text import NAVEText, TextExplanation
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 __all__ = ["NAVEImage", "ImageExplanation", "NAVESeries", "SeriesExplanation", "NAVEText", "TextExplanation",
            "models", "NaveMemoryWarning", "__version__"]
