@@ -69,7 +69,7 @@ text_explainer = NAVEText("spacy").fit(documents)  # pip install "nave-xai[text]
 text_explainer.summarize(documents[0])           # tokens on their concept's colour, concept table
 ```
 
-See [Time series](docs/series.md) and [Text](docs/text.md).
+See [Time series](https://github.com/Ahcene-B/NAVE/blob/main/docs/series.md) and [Text](https://github.com/Ahcene-B/NAVE/blob/main/docs/text.md).
 
 ## Choose what to explain
 
@@ -89,28 +89,28 @@ NAVEImage(model="vits16", training="dino", features="keys")   # ViTs: attention 
 
 Shallow layers carry fine detail and edges, deep layers abstract semantics; NAVE's composite pixels
 combine both. Your own PyTorch models, ONNX files and plain functions work too, see
-[Your own models](docs/custom-models.md).
+[Your own models](https://github.com/Ahcene-B/NAVE/blob/main/docs/custom-models.md).
 
 ## GIMP plugin
 
-[`gimp/`](gimp/) holds a GIMP 3 plugin, **Filters › Generic › NAVE Superpixels…**, that adds NAVE's segment
+[`gimp/`](https://github.com/Ahcene-B/NAVE/tree/main/gimp) holds a GIMP 3 plugin, **Filters › Generic › NAVE Superpixels…**, that adds NAVE's segment
 borders, average-coloured segments or concept colours to an image as new layers, with ResNet18, ResNet50 or
 ViT-S/16 (random, ImageNet or DINO weights). It runs on its own: no torch, and it sets up a private Python
-with numpy and onnxruntime on first use. See [`gimp/README.md`](gimp/README.md) for installation.
+with numpy and onnxruntime on first use. See [`gimp/README.md`](https://github.com/Ahcene-B/NAVE/blob/main/gimp/README.md) for installation.
 
 ## Documentation
 
-- [Getting started](docs/getting-started.md)
-- [How NAVE works](docs/concepts.md)
-- [Fitting on a dataset](docs/datasets.md)
-- [Time series](docs/series.md)
-- [Text](docs/text.md)
-- [Inspecting models](docs/inspecting.md)
-- [Your own models](docs/custom-models.md)
-- [Memory and large images](docs/memory.md)
-- [API reference](docs/api.md)
-- [Animated demos](notebooks/animations/): encoders block by block, models during training, shortcuts, fine-tuning
-- [Demo notebook](notebooks/demo.ipynb), [time series](notebooks/series.ipynb), [text](notebooks/text.ipynb)
+- [Getting started](https://github.com/Ahcene-B/NAVE/blob/main/docs/getting-started.md)
+- [How NAVE works](https://github.com/Ahcene-B/NAVE/blob/main/docs/concepts.md)
+- [Fitting on a dataset](https://github.com/Ahcene-B/NAVE/blob/main/docs/datasets.md)
+- [Time series](https://github.com/Ahcene-B/NAVE/blob/main/docs/series.md)
+- [Text](https://github.com/Ahcene-B/NAVE/blob/main/docs/text.md)
+- [Inspecting models](https://github.com/Ahcene-B/NAVE/blob/main/docs/inspecting.md)
+- [Your own models](https://github.com/Ahcene-B/NAVE/blob/main/docs/custom-models.md)
+- [Memory and large images](https://github.com/Ahcene-B/NAVE/blob/main/docs/memory.md)
+- [API reference](https://github.com/Ahcene-B/NAVE/blob/main/docs/api.md)
+- [Animated demos](https://github.com/Ahcene-B/NAVE/tree/main/notebooks/animations): encoders block by block, models during training, shortcuts, fine-tuning
+- [Demo notebook](https://github.com/Ahcene-B/NAVE/blob/main/notebooks/demo.ipynb), [time series](https://github.com/Ahcene-B/NAVE/blob/main/notebooks/series.ipynb), [text](https://github.com/Ahcene-B/NAVE/blob/main/notebooks/text.ipynb)
 
 ## Citation
 

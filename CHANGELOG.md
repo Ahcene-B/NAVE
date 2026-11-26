@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- README: absolute links, so they also work on PyPI.
+
 ## 0.1.2
 
 - Default upsampling: `"nearest"` (the paper's blocky maps) for images, series and text.
