@@ -2,6 +2,7 @@
 
 ## 0.1.2
 
+- Default upsampling: `"nearest"` (the paper's blocky maps) for images, series and text.
 - The GIMP 3 plugin in `gimp/`, with the package's model graphs (its ViT graph now works on
   onnxruntime 1.20 and newer).
 - Animated demo notebooks (`notebooks/animations/`), shown in the notebook and saved as GIFs:

@@ -1,0 +1,464 @@
+From 9b82bcc6165ed59ad2af5395e4d1747f55d02f92 Mon Sep 17 00:00:00 2001
+From: Ahcene-B <ahcene.boubekki@gmail.com>
+Date: Thu, 26 Nov 2026 17:10:51 +0000
+Subject: [PATCH] Default upsampling: nearest; acknowledgments in the README
+ only
+
+- NAVEImage, NAVESeries and NAVEText default to upsample="nearest" (the paper's blocky maps)
+- the acknowledgment stays in the README, out of the docs and the notebooks
+---
+ CHANGELOG.md                                               | 1 +
+ docs/getting-started.md                                    | 2 +-
+ docs/index.md                                              | 4 ----
+ notebooks/animations/01_encoder_blocks.ipynb               | 4 +---
+ notebooks/animations/02_resnet34_training.ipynb            | 4 +---
+ notebooks/animations/03_augmentation.ipynb                 | 4 +---
+ notebooks/animations/04_supervised_vs_selfsupervised.ipynb | 4 +---
+ notebooks/animations/05_image_atlas.ipynb                  | 4 +---
+ notebooks/animations/06_artifacts.ipynb                    | 4 +---
+ notebooks/animations/07_shortcut.ipynb                     | 4 +---
+ notebooks/animations/08_finetuning.ipynb                   | 4 +---
+ notebooks/animations/09_overfitting.ipynb                  | 4 +---
+ notebooks/animations/10_imbalance.ipynb                    | 4 +---
+ notebooks/demo.ipynb                                       | 4 +---
+ notebooks/inspecting/01_training.ipynb                     | 4 +---
+ notebooks/inspecting/02_architectures.ipynb                | 4 +---
+ notebooks/inspecting/03_depth.ipynb                        | 4 +---
+ notebooks/inspecting/04_vit_registers.ipynb                | 4 +---
+ notebooks/inspecting/05_shortcuts.ipynb                    | 4 +---
+ notebooks/inspecting/06_concept_features.ipynb             | 4 +---
+ notebooks/inspecting/07_localization.ipynb                 | 4 +---
+ notebooks/inspecting/08_uncertainty.ipynb                  | 4 +---
+ notebooks/series.ipynb                                     | 4 +---
+ notebooks/text.ipynb                                       | 4 +---
+ src/nave_xai/_saliency.py                                  | 2 +-
+ src/nave_xai/image.py                                      | 4 ++--
+ src/nave_xai/series.py                                     | 4 ++--
+ src/nave_xai/text.py                                       | 2 +-
+ 28 files changed, 29 insertions(+), 74 deletions(-)
+
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 44149e9..225c160 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -2,6 +2,7 @@
+ 
+ ## 0.1.2
+ 
++- Default upsampling: `"nearest"` (the paper's blocky maps) for images, series and text.
+ - The GIMP 3 plugin in `gimp/`, with the package's model graphs (its ViT graph now works on
+   onnxruntime 1.20 and newer).
+ - Animated demo notebooks (`notebooks/animations/`), shown in the notebook and saved as GIFs:
+diff --git a/docs/getting-started.md b/docs/getting-started.md
+index 4fff161..b120424 100644
+--- a/docs/getting-started.md
++++ b/docs/getting-started.md
+@@ -62,7 +62,7 @@ NAVEImage(
+     training="imagenet",     # "random", "imagenet", "dino"
+     layers=[3, 4],           # or "N34"; ViT: e.g. [9, 12] or "N:9-12"
+     k=10,                    # concepts
+-    upsample="cubic",        # "nearest" (blocky, as in the paper), "linear", "cubic"
++    upsample="nearest",      # default, blocky as in the paper; or "linear", "cubic"
+ )
+ ```
+ 
+diff --git a/docs/index.md b/docs/index.md
+index 8951ec2..62ea89a 100644
+--- a/docs/index.md
++++ b/docs/index.md
+@@ -42,7 +42,3 @@ exp.explanation          # (H, W) the concept of every pixel
+ - New here? Start with [Getting started](getting-started.md).
+ - The method: [How NAVE works](concepts.md).
+ - NAVE as a diagnostic tool: [Inspecting models](inspecting.md).
+-
+-## Acknowledgments
+-
+-We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible.
+diff --git a/notebooks/animations/01_encoder_blocks.ipynb b/notebooks/animations/01_encoder_blocks.ipynb
+index c2c34ca..f898cb3 100644
+--- a/notebooks/animations/01_encoder_blocks.ipynb
++++ b/notebooks/animations/01_encoder_blocks.ipynb
+@@ -635,9 +635,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/02_resnet34_training.ipynb b/notebooks/animations/02_resnet34_training.ipynb
+index b06c60a..4ea4ff3 100644
+--- a/notebooks/animations/02_resnet34_training.ipynb
++++ b/notebooks/animations/02_resnet34_training.ipynb
+@@ -495,9 +495,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/03_augmentation.ipynb b/notebooks/animations/03_augmentation.ipynb
+index bf8bb69..ea935df 100644
+--- a/notebooks/animations/03_augmentation.ipynb
++++ b/notebooks/animations/03_augmentation.ipynb
+@@ -281,9 +281,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/04_supervised_vs_selfsupervised.ipynb b/notebooks/animations/04_supervised_vs_selfsupervised.ipynb
+index 1a6778c..76ff0fd 100644
+--- a/notebooks/animations/04_supervised_vs_selfsupervised.ipynb
++++ b/notebooks/animations/04_supervised_vs_selfsupervised.ipynb
+@@ -334,9 +334,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/05_image_atlas.ipynb b/notebooks/animations/05_image_atlas.ipynb
+index 42e6294..1412bc0 100644
+--- a/notebooks/animations/05_image_atlas.ipynb
++++ b/notebooks/animations/05_image_atlas.ipynb
+@@ -342,9 +342,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/06_artifacts.ipynb b/notebooks/animations/06_artifacts.ipynb
+index a84bdf0..7790d77 100644
+--- a/notebooks/animations/06_artifacts.ipynb
++++ b/notebooks/animations/06_artifacts.ipynb
+@@ -243,9 +243,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/07_shortcut.ipynb b/notebooks/animations/07_shortcut.ipynb
+index 78ed1ff..b567695 100644
+--- a/notebooks/animations/07_shortcut.ipynb
++++ b/notebooks/animations/07_shortcut.ipynb
+@@ -548,9 +548,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/08_finetuning.ipynb b/notebooks/animations/08_finetuning.ipynb
+index 2221b7b..793f8a1 100644
+--- a/notebooks/animations/08_finetuning.ipynb
++++ b/notebooks/animations/08_finetuning.ipynb
+@@ -501,9 +501,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/09_overfitting.ipynb b/notebooks/animations/09_overfitting.ipynb
+index f561037..4ed69d2 100644
+--- a/notebooks/animations/09_overfitting.ipynb
++++ b/notebooks/animations/09_overfitting.ipynb
+@@ -516,9 +516,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/animations/10_imbalance.ipynb b/notebooks/animations/10_imbalance.ipynb
+index 6a7b695..91d583c 100644
+--- a/notebooks/animations/10_imbalance.ipynb
++++ b/notebooks/animations/10_imbalance.ipynb
+@@ -558,9 +558,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/demo.ipynb b/notebooks/demo.ipynb
+index 42fd736..e53dabd 100644
+--- a/notebooks/demo.ipynb
++++ b/notebooks/demo.ipynb
+@@ -488,9 +488,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/01_training.ipynb b/notebooks/inspecting/01_training.ipynb
+index 0d2efcd..1dffd79 100644
+--- a/notebooks/inspecting/01_training.ipynb
++++ b/notebooks/inspecting/01_training.ipynb
+@@ -119,9 +119,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/02_architectures.ipynb b/notebooks/inspecting/02_architectures.ipynb
+index bf080fa..ea2437e 100644
+--- a/notebooks/inspecting/02_architectures.ipynb
++++ b/notebooks/inspecting/02_architectures.ipynb
+@@ -129,9 +129,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/03_depth.ipynb b/notebooks/inspecting/03_depth.ipynb
+index f29c4e9..3f5381b 100644
+--- a/notebooks/inspecting/03_depth.ipynb
++++ b/notebooks/inspecting/03_depth.ipynb
+@@ -127,9 +127,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/04_vit_registers.ipynb b/notebooks/inspecting/04_vit_registers.ipynb
+index 07e16df..3fd975d 100644
+--- a/notebooks/inspecting/04_vit_registers.ipynb
++++ b/notebooks/inspecting/04_vit_registers.ipynb
+@@ -151,9 +151,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/05_shortcuts.ipynb b/notebooks/inspecting/05_shortcuts.ipynb
+index c8e4e6f..db7ddf7 100644
+--- a/notebooks/inspecting/05_shortcuts.ipynb
++++ b/notebooks/inspecting/05_shortcuts.ipynb
+@@ -144,9 +144,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/06_concept_features.ipynb b/notebooks/inspecting/06_concept_features.ipynb
+index f9a73db..b31f202 100644
+--- a/notebooks/inspecting/06_concept_features.ipynb
++++ b/notebooks/inspecting/06_concept_features.ipynb
+@@ -150,9 +150,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/07_localization.ipynb b/notebooks/inspecting/07_localization.ipynb
+index 11e3ebf..2242a9d 100644
+--- a/notebooks/inspecting/07_localization.ipynb
++++ b/notebooks/inspecting/07_localization.ipynb
+@@ -140,9 +140,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/inspecting/08_uncertainty.ipynb b/notebooks/inspecting/08_uncertainty.ipynb
+index e7e86f8..15f01f9 100644
+--- a/notebooks/inspecting/08_uncertainty.ipynb
++++ b/notebooks/inspecting/08_uncertainty.ipynb
+@@ -141,9 +141,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/series.ipynb b/notebooks/series.ipynb
+index da745f1..34524e8 100644
+--- a/notebooks/series.ipynb
++++ b/notebooks/series.ipynb
+@@ -191,9 +191,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/notebooks/text.ipynb b/notebooks/text.ipynb
+index 9ff7666..8fc2cd3 100644
+--- a/notebooks/text.ipynb
++++ b/notebooks/text.ipynb
+@@ -221,9 +221,7 @@
+     "  doi       = {10.1007/978-3-032-37664-0_26},\n",
+     "  isbn      = {978-3-032-37664-0}\n",
+     "}\n",
+-    "```\n",
+-    "\n",
+-    "We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible."
++    "```"
+    ]
+   }
+  ],
+diff --git a/src/nave_xai/_saliency.py b/src/nave_xai/_saliency.py
+index 9d33d90..305a414 100644
+--- a/src/nave_xai/_saliency.py
++++ b/src/nave_xai/_saliency.py
+@@ -59,7 +59,7 @@ def _level_clusterer(spec, k, seed, alpha, iterations, burn_in):
+     return fresh_copy(algo, seed)
+ 
+ 
+-def saliency(image, backbone, names, k=10, *, classifier=None, target=None, upsample="cubic",
++def saliency(image, backbone, names, k=10, *, classifier=None, target=None, upsample="nearest",
+              normalize=True, scale=True, clusterer=None, alpha=1.0, iterations=200, burn_in=100,
+              sample_size=20000, connectivity=8, seed=0):
+     """Concept-based class saliency of one image (used by `NAVEImage.saliency`).
+diff --git a/src/nave_xai/image.py b/src/nave_xai/image.py
+index 065ea0f..6b0f38e 100644
+--- a/src/nave_xai/image.py
++++ b/src/nave_xai/image.py
+@@ -83,7 +83,7 @@ class NAVEImage(_ConceptsBase):
+         projections (PCA, NMF, ...) to the component with the largest absolute value.
+     bayes_alpha, bayes_iter, bayes_burn_in : Dirichlet concentration, Gibbs sweeps and
+         discarded sweeps of projector="bayesian"
+-    upsample : "nearest" (the paper's blocky maps), "linear" or "cubic": interpolation of deeper
++    upsample : "nearest" (default: the paper's blocky maps), "linear" or "cubic": interpolation of deeper
+         layers and of concept scores to pixels
+     window : "auto" (windows when the longer side is at least `window_factor` times the model's
+         input size, 224 px for the built-in models: windows twice the input size, every half
+@@ -128,7 +128,7 @@ class NAVEImage(_ConceptsBase):
+     _PER_CONCEPT = ("patches", "_cells")
+ 
+     def __init__(self, model="vitt16", training="imagenet", layers=None, k=10, projector=None,
+-                 bayes_alpha=1.0, bayes_iter=200, bayes_burn_in=100, upsample="cubic", window="auto",
++                 bayes_alpha=1.0, bayes_iter=200, bayes_burn_in=100, upsample="nearest", window="auto",
+                  fit_on="all", sample_size=20000, epochs=1, normalize=True, scale=True,
+                  uncertainty_temp=0.1, transforms="default", classifier=None, class_names=None,
+                  window_factor=3, features="tokens", seed=0, device="cpu", progress=False):
+diff --git a/src/nave_xai/series.py b/src/nave_xai/series.py
+index 624489b..378f003 100644
+--- a/src/nave_xai/series.py
++++ b/src/nave_xai/series.py
+@@ -37,7 +37,7 @@ class NAVESeries(_SequenceBase):
+     channel_names : names of the channels, for `summarize`
+     window : None (whole series) or a window length in steps (windows every half window, every
+         step from the window whose centre is nearest)
+-    upsample : "linear" (default), "nearest" or "cubic": deeper layers and scores to every step
++    upsample : "nearest" (default), "linear" or "cubic": deeper layers and scores to every step
+     Other parameters as in `NAVEImage`.
+ 
+     Attributes (after fitting)
+@@ -54,7 +54,7 @@ class NAVESeries(_SequenceBase):
+     _PER_CONCEPT = ("snippets", "profiles", "positions", "durations")
+ 
+     def __init__(self, model, layers, k=10, multiple=1, channels_last=False, projector=None, bayes_alpha=1.0,
+-                 bayes_iter=200, bayes_burn_in=100, upsample="linear", window=None, fit_on="all",
++                 bayes_iter=200, bayes_burn_in=100, upsample="nearest", window=None, fit_on="all",
+                  sample_size=20000, epochs=1, normalize=True, scale=True, uncertainty_temp=0.1, transforms=None,
+                  classifier=None, class_names=None, channel_names=None, n_snippets=5, seed=0, device="cpu",
+                  progress=False):
+diff --git a/src/nave_xai/text.py b/src/nave_xai/text.py
+index 87115fe..a46f513 100644
+--- a/src/nave_xai/text.py
++++ b/src/nave_xai/text.py
+@@ -87,7 +87,7 @@ class NAVEText(_SequenceBase):
+     _PER_CONCEPT = ("span_counts", "mean_runs", "words", "spans")
+ 
+     def __init__(self, model="spacy", layers=None, k=20, tokenizer=None, projector=None, bayes_alpha=1.0,
+-                 bayes_iter=200, bayes_burn_in=100, upsample="linear", window=None, fit_on="all",
++                 bayes_iter=200, bayes_burn_in=100, upsample="nearest", window=None, fit_on="all",
+                  sample_size=20000, epochs=1, normalize=True, scale=True, uncertainty_temp=0.1, classifier=None,
+                  class_names=None, n_words=6, seed=0, device="cpu", progress=False):
+         self._init_common(layers, k, projector, bayes_alpha, bayes_iter, bayes_burn_in, upsample, window, fit_on,
+-- 
+2.43.0
+

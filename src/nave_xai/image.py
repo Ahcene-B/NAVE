@@ -83,7 +83,7 @@ class NAVEImage(_ConceptsBase):
         projections (PCA, NMF, ...) to the component with the largest absolute value.
     bayes_alpha, bayes_iter, bayes_burn_in : Dirichlet concentration, Gibbs sweeps and
         discarded sweeps of projector="bayesian"
-    upsample : "nearest" (the paper's blocky maps), "linear" or "cubic": interpolation of deeper
+    upsample : "nearest" (default: the paper's blocky maps), "linear" or "cubic": interpolation of deeper
         layers and of concept scores to pixels
     window : "auto" (windows when the longer side is at least `window_factor` times the model's
         input size, 224 px for the built-in models: windows twice the input size, every half
@@ -128,7 +128,7 @@ class NAVEImage(_ConceptsBase):
     _PER_CONCEPT = ("patches", "_cells")
 
     def __init__(self, model="vitt16", training="imagenet", layers=None, k=10, projector=None,
-                 bayes_alpha=1.0, bayes_iter=200, bayes_burn_in=100, upsample="cubic", window="auto",
+                 bayes_alpha=1.0, bayes_iter=200, bayes_burn_in=100, upsample="nearest", window="auto",
                  fit_on="all", sample_size=20000, epochs=1, normalize=True, scale=True,
                  uncertainty_temp=0.1, transforms="default", classifier=None, class_names=None,
                  window_factor=3, features="tokens", seed=0, device="cpu", progress=False):

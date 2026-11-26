@@ -62,7 +62,7 @@ NAVEImage(
     training="imagenet",     # "random", "imagenet", "dino"
     layers=[3, 4],           # or "N34"; ViT: e.g. [9, 12] or "N:9-12"
     k=10,                    # concepts
-    upsample="cubic",        # "nearest" (blocky, as in the paper), "linear", "cubic"
+    upsample="nearest",      # default, blocky as in the paper; or "linear", "cubic"
 )
 ```
 

@@ -87,7 +87,7 @@ class NAVEText(_SequenceBase):
     _PER_CONCEPT = ("span_counts", "mean_runs", "words", "spans")
 
     def __init__(self, model="spacy", layers=None, k=20, tokenizer=None, projector=None, bayes_alpha=1.0,
-                 bayes_iter=200, bayes_burn_in=100, upsample="linear", window=None, fit_on="all",
+                 bayes_iter=200, bayes_burn_in=100, upsample="nearest", window=None, fit_on="all",
                  sample_size=20000, epochs=1, normalize=True, scale=True, uncertainty_temp=0.1, classifier=None,
                  class_names=None, n_words=6, seed=0, device="cpu", progress=False):
         self._init_common(layers, k, projector, bayes_alpha, bayes_iter, bayes_burn_in, upsample, window, fit_on,

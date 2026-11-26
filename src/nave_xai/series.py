@@ -37,7 +37,7 @@ class NAVESeries(_SequenceBase):
     channel_names : names of the channels, for `summarize`
     window : None (whole series) or a window length in steps (windows every half window, every
         step from the window whose centre is nearest)
-    upsample : "linear" (default), "nearest" or "cubic": deeper layers and scores to every step
+    upsample : "nearest" (default), "linear" or "cubic": deeper layers and scores to every step
     Other parameters as in `NAVEImage`.
 
     Attributes (after fitting)
@@ -54,7 +54,7 @@ class NAVESeries(_SequenceBase):
     _PER_CONCEPT = ("snippets", "profiles", "positions", "durations")
 
     def __init__(self, model, layers, k=10, multiple=1, channels_last=False, projector=None, bayes_alpha=1.0,
-                 bayes_iter=200, bayes_burn_in=100, upsample="linear", window=None, fit_on="all",
+                 bayes_iter=200, bayes_burn_in=100, upsample="nearest", window=None, fit_on="all",
                  sample_size=20000, epochs=1, normalize=True, scale=True, uncertainty_temp=0.1, transforms=None,
                  classifier=None, class_names=None, channel_names=None, n_snippets=5, seed=0, device="cpu",
                  progress=False):

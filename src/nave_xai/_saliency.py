@@ -59,7 +59,7 @@ def _level_clusterer(spec, k, seed, alpha, iterations, burn_in):
     return fresh_copy(algo, seed)
 
 
-def saliency(image, backbone, names, k=10, *, classifier=None, target=None, upsample="cubic",
+def saliency(image, backbone, names, k=10, *, classifier=None, target=None, upsample="nearest",
              normalize=True, scale=True, clusterer=None, alpha=1.0, iterations=200, burn_in=100,
              sample_size=20000, connectivity=8, seed=0):
     """Concept-based class saliency of one image (used by `NAVEImage.saliency`).

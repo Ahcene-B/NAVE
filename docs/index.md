@@ -42,7 +42,3 @@ exp.explanation          # (H, W) the concept of every pixel
 - New here? Start with [Getting started](getting-started.md).
 - The method: [How NAVE works](concepts.md).
 - NAVE as a diagnostic tool: [Inspecting models](inspecting.md).
-
-## Acknowledgments
-
-We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computing resources without which this work would not have been possible.
