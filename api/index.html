@@ -1,0 +1,3641 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="NAVE explanations of vision encoders">
+      
+      
+      
+      
+        <link rel="prev" href="../memory/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+      
+        <title>API reference - nave-xai</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="nave-xai" class="md-header__button md-logo" aria-label="nave-xai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            nave-xai
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Ahcene-B/NAVE" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="nave-xai" class="md-nav__button md-logo" aria-label="nave-xai" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    nave-xai
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Ahcene-B/NAVE" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How NAVE works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your own models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fitting on a dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Time series
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inspecting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inspecting models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memory and large images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVEImage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.update_patches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_patches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.fit_predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit_predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        explain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.segment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        segment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.saliency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        saliency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageExplanation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation.segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        segmentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation.border" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        border
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time series
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVESeries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries.update_snippets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_snippets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.SeriesExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SeriesExplanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVEText
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText.update_spans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_spans
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.TextExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TextExplanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images (models)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        available
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.download_weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        download_weights
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.resolve_blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_blocks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.head" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        head
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.head_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        head_features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.logits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.torch_backbone.TorchBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TorchBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.OnnxBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnnxBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.FunctionBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FunctionBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequence models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequence models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.FunctionSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FunctionSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.TorchSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TorchSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.OnnxSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnnxSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warnings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Warnings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NaveMemoryWarning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NaveMemoryWarning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVEImage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.update_patches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_patches
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.fit_predict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fit_predict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.explain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        explain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.segment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        segment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.saliency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        saliency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.NAVEImage.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageExplanation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation.segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        segmentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nave_xai.ImageExplanation.border" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        border
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time series
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVESeries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries.update_snippets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_snippets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVESeries.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.SeriesExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SeriesExplanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAVEText
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText.update_spans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update_spans
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NAVEText.summarize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        summarize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.TextExplanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TextExplanation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#images-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images (models)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        available
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.download_weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        download_weights
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.resolve_blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_blocks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.head" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        head
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.head_features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        head_features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.backbone.Backbone.logits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        logits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.torch_backbone.TorchBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TorchBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.OnnxBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnnxBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.FunctionBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FunctionBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sequence models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sequence models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.FunctionSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FunctionSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.TorchSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TorchSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.models.sequence.OnnxSequenceBackbone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OnnxSequenceBackbone
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#warnings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warnings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Warnings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nave_xai.NaveMemoryWarning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NaveMemoryWarning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="api-reference">API reference</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.NAVEImage"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai._shared._ConceptsBase">_ConceptsBase</span></code></p>
+
+
+
+        <p>NAVE explainer: concepts from a vision encoder, and explanations of images with them.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>model</code>
+            </td>
+            <td>
+                  <code>&#34;vitt16&#34; (ViT-Ti/16, the default), &#34;resnet18&#34;, &#34;resnet50&#34;, &#34;vits16&#34;, a torch.nn.Module,</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>a Backbone, a path to an .onnx file, or a function returning feature maps</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;vitt16&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>training</code>
+            </td>
+            <td>
+                  <code>weights of a built-in model: &#34;random&#34;, &#34;imagenet&#34; or &#34;dino&#34; (vitt16: random, imagenet)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>&#39;imagenet&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>layers</code>
+            </td>
+            <td>
+                  <code>built-in models: numbers (``[3, 4]``) or paper notation (``&#34;N34&#34;``, ``&#34;N:9-12&#34;``);</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>None: N34 for ResNets, the last block for ViTs. Other models: module names.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>k</code>
+            </td>
+            <td>
+                  <code>number of concepts per projector (an upper bound with projector=&#34;bayesian&#34;)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>projector</code>
+            </td>
+            <td>
+                  <code>None/&#34;kmeans&#34;, &#34;bayesian&#34; (Dirichlet-prior k-means, Gibbs sampling), &#34;pca&#34;, or</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>a scikit-learn-style object. Clusterers assign a pixel to the closest prototype,
+projections (PCA, NMF, ...) to the component with the largest absolute value.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bayes_alpha</code>
+            </td>
+            <td>
+                  <code>Dirichlet concentration, Gibbs sweeps and</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>discarded sweeps of projector="bayesian"</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bayes_iter</code>
+            </td>
+            <td>
+                  <code>Dirichlet concentration, Gibbs sweeps and</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>discarded sweeps of projector="bayesian"</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>bayes_burn_in</code>
+            </td>
+            <td>
+                  <code>Dirichlet concentration, Gibbs sweeps and</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>discarded sweeps of projector="bayesian"</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>upsample</code>
+            </td>
+            <td>
+                  <code>&#34;nearest&#34; (default: the paper&#39;s blocky maps), &#34;linear&#34; or &#34;cubic&#34;: interpolation of deeper</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>layers and of concept scores to pixels</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;nearest&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>window</code>
+            </td>
+            <td>
+                  <code>&#34;auto&#34; (windows when the longer side is at least `window_factor` times the model&#39;s</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>input size, 224 px for the built-in models: windows twice the input size, every half
+window, each pixel from the window whose centre is nearest), None (always whole), or a
+window size in px</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;auto&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>window_factor</code>
+            </td>
+            <td>
+                  <code>see `window`</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>3</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>features</code>
+            </td>
+            <td>
+                  <code>built-in ViTs: &#34;tokens&#34; (the blocks&#39; outputs, default) or &#34;keys&#34; (the attention keys</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>of the same blocks, as in LOST and TokenCut). Saliency and class predictions always use
+the blocks' outputs, which the classifier reads.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;tokens&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fit_on</code>
+            </td>
+            <td>
+                  <code>&#34;all&#34; (every composite pixel: exact if they fit in memory, else streamed through</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>mini-batch k-means, with a warning) or "sample" (<code>sample_size</code> composite pixels)</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;all&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>sample_size</code>
+            </td>
+            <td>
+                  <code>composite pixels used with fit_on=&#34;sample&#34; (and to seed streaming)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>20000</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>epochs</code>
+            </td>
+            <td>
+                  <code>streaming passes when fit_on=&#34;all&#34; falls back to mini-batch k-means</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>normalize</code>
+            </td>
+            <td>
+                  <code>per-pixel L2 normalisation of each layer (Algorithm 1, line 9)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>scale</code>
+            </td>
+            <td>
+                  <code>C_min / (1 + C_b) scaling of each layer (Algorithm 1, line 10)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>uncertainty_temp</code>
+            </td>
+            <td>
+                  <code>softmax temperature of the uncertainty (default 0.1). &#34;auto&#34;: 1 for</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>probabilistic projectors, else the median gap between the two best concept scores</p>
+              </div>
+            </td>
+            <td>
+                  <code>0.1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>transforms</code>
+            </td>
+            <td>
+                  <code>&#34;default&#34; (ImageNet-style normalisation of the model) or a function, or a list</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>of functions applied in order, from image to image (e.g. a resizing lambda). They get an
+(H, W, 3) uint8 array. If the last one returns uint8 (or floats in [0, 1]), the model's
+default normalisation follows; otherwise its output is used as the normalised input.
+Use only resizing and colour operations: maps are returned at the original size.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;default&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>classifier</code>
+            </td>
+            <td>
+                  <code>for the classes, correlations and saliency: None (the model&#39;s own head), a</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>torch.nn.Linear, a (classes, C) weight matrix, a (weight, bias) pair, or a function
+image -&gt; class scores or class id</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>class_names</code>
+            </td>
+            <td>
+                  <code>names of the classes for `summarize` (a list or dict)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>seed</code>
+            </td>
+            <td>
+                  <code>random seed</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+                  <code>for PyTorch models</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>&#39;cpu&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>progress</code>
+            </td>
+            <td>
+                  <code>False, True (progress bar) or a callable(fraction, text)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="attributes-(after-fitting)" open>
+  <summary>Attributes (after fitting)</summary>
+  <p>fitted : True after an explicit <code>fit</code>
+prototypes : (K, D) concept prototypes (PCA: components)
+palette : (K, 3) uint8 concept colours (Spectral by default, along the concept order)
+patches : (K, 2, 32, 32, 3) uint8, the closest and the largest cell of every concept in the
+    fitting set: dimmed outside the cell, with a 1 px white line around it
+classes : (C,) the groups given to <code>fit</code>, else the model's predicted classes
+correlation : (K, C) Pearson correlation between concept proportions and <code>classes</code></p>
+</details>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.fit" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fit</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">merge_groups</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reorder</span><span class="o">=</span><span class="s1">'ward'</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Extract concepts from <code>images</code>.</p>
+<p>images : an (N, H, W, 3) or (N, H, W) array (uint8, or float in [0, 1]), or a list of images
+groups : one label per image: one projector is fitted per group, and the groups become
+    the <code>classes</code> of the correlation
+merge_groups : merge the groups' projectors into one (<code>predict</code> then ignores groups)
+reorder : "ward", "average", "single" or None: order of the concept ids. With groups,
+    concepts are ordered by group first, then within each group, and every group gets a
+    colour family.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.update_patches" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">update_patches</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">min_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Recompute the patches (closest and largest cell of every concept) on <code>images</code>.</p>
+<p>min_size : minimum height and width, in pixels, of a cell to be the closest one. If no
+    cell is large enough, the largest is used (with a warning); a concept with no cell
+    at all gets an empty patch.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.predict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Explanations of <code>images</code> with the fitted concepts: a list of <code>ImageExplanation</code>s.</p>
+<p>groups : one label per image: use only that group's projector (when fitted with
+    merge_groups=False). None: every projector scores every pixel, the closest wins.
+uncertainty : also compute the uncertainty map H(softmax(scores / T)) / log K</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.fit_predict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">fit_predict</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">merge_groups</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reorder</span><span class="o">=</span><span class="s1">'ward'</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p><code>fit</code>, then <code>predict</code> on the same images.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.explain" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">explain</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Explain images: with the fitted concepts after an explicit <code>fit</code>, otherwise by fitting
+afresh on these images (every call). One image gives one <code>ImageExplanation</code>, several a list.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.segment" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">segment</span><span class="p">(</span><span class="n">image</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Superpixels: <code>explain(image).segmentation()</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.saliency" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">saliency</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Concept-based saliency: the cosine between the deepest layer's features and the
+classifier's vector of the target class, averaged over NAVE regions from the deepest
+layer to the shallowest. One (H, W) float32 map per image (a list for several).</p>
+<p>classifier : as in the constructor (overrides it); None uses the constructor's, else
+    the model's own head
+target : class index; None = the class the model predicts</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEImage.summarize" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">summarize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">correlation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">saliency</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">patches</span><span class="o">=</span><span class="s1">'closest'</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saliency_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>A figure in the style of the paper's Figure 1, for one image.</p>
+<p>Row 1: the image | its explanation (uncertainty as opacity on white if asked) | its saliency
+(if asked), all at the image's size.
+Then, for every block of 10 concepts: their correlation with the classes (if available and
+asked) and their patches ("closest" or "largest"), framed in the concept's colour.
+Returns the matplotlib Figure.
+saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+    cosine), or "auto": centred on 0, up to the item's largest |saliency|</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.ImageExplanation"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>The NAVE explanation of one image.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="nave_xai.ImageExplanation.explanation">explanation</span></code></td>
+            <td>
+                  <code>(H, W) int32, the concept of every pixel (the explanation map)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nave_xai.ImageExplanation.uncertainty">uncertainty</span></code></td>
+            <td>
+                  <code>(H, W) float32 in [0, 1], normalised entropy of the concept assignment</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>(with uncertainty=True), else None</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="nave_xai.ImageExplanation.K">K</span></code></td>
+            <td>
+                  <code>number of concepts, e.g. for ``np.bincount(exp.explanation.ravel(), minlength=exp.K)``</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.ImageExplanation.segmentation" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">segmentation</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>(H, W) int32 connected regions of the explanation map, like skimage.segmentation.slic.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.ImageExplanation.border" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">border</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>(H, W) int32 mask (0 and 1) of the inner margin, <code>width</code> px wide, of every region.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="time-series">Time series</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.NAVESeries"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai._sequence._SequenceBase">_SequenceBase</span></code></p>
+
+
+
+        <p>NAVE explainer for time series.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>model</code>
+            </td>
+            <td>
+                  <code>a torch.nn.Module, an .onnx path, a function x (1, C, T) -&gt; {layer: (C_b, t_b)}, or a</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>SequenceBackbone</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>layers</code>
+            </td>
+            <td>
+                  <code>the layers to combine (module names or the function&#39;s keys), shallowest first</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>k</code>
+            </td>
+            <td>
+                  <code>number of concepts per projector</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>10</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>multiple</code>
+            </td>
+            <td>
+                  <code>inputs are padded (mirrored) to a multiple of this length (the model&#39;s downsampling)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>channels_last</code>
+            </td>
+            <td>
+                  <code>PyTorch transformer layers output (N, t, C): set True</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>transforms</code>
+            </td>
+            <td>
+                  <code>None, or a function (or list) applied to each (C, T) series (e.g. normalisation)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>channel_names</code>
+            </td>
+            <td>
+                  <code>names of the channels, for `summarize`</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>window</code>
+            </td>
+            <td>
+                  <code>None (whole series) or a window length in steps (windows every half window, every</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>step from the window whose centre is nearest)</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>upsample</code>
+            </td>
+            <td>
+                  <code>&#34;nearest&#34; (default), &#34;linear&#34; or &#34;cubic&#34;: deeper layers and scores to every step</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>&#39;nearest&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>Other</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="attributes-(after-fitting)" open>
+  <summary>Attributes (after fitting)</summary>
+  <p>prototypes, palette, classes, correlation, fitted : as in <code>NAVEImage</code>
+snippets : for each concept, a list of up to n (series, start, end, (C, L) values, offset):
+    the segments closest to the prototype, with context
+profiles : (K, C, 40, 3) the 10th, 50th and 90th percentiles of the concept's segments,
+    resampled to 40 points, per channel
+positions : (K, 12) histogram of where segments sit (relative position in the series)
+durations : (K, 2) median and mean segment length, in steps</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVESeries.update_snippets" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">update_snippets</span><span class="p">(</span><span class="n">series</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Recompute snippets, profiles, positions and durations on <code>series</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVESeries.summarize" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">summarize</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">saliency</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saliency_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>The figure for one series: one row per channel (the signal over the segmentation),
+an uncertainty row (if asked; inferno reversed: bright = certain, black = uncertain),
+a saliency row (if asked), the correlation of the
+concepts with the classes, and per concept: position &amp; duration, snippets, profile
+(one band per channel), 10 concepts per row. span=(start, end) zooms on a part.
+label : the series' true class, shown with the model's prediction (when it predicts).
+saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+    cosine), or "auto": centred on 0, up to the item's largest |saliency|</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.SeriesExplanation"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai._sequence.SequenceExplanation">SequenceExplanation</span></code></p>
+
+
+
+        <p><code>explanation</code> (T,), <code>uncertainty</code> (T,) or None, <code>K</code>; <code>segments()</code> and <code>border()</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="text">Text</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.NAVEText"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai._sequence._SequenceBase">_SequenceBase</span></code></p>
+
+
+
+        <p>NAVE explainer for text.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>model</code>
+            </td>
+            <td>
+                  <code>&#34;spacy&#34; (spaCy&#39;s tok2vec, needs `pip install &#34;nave-xai[text]&#34;`), a function</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>tokens -&gt; {layer: (C_b, n_tokens), optional "logits"}, or a SequenceBackbone. For PyTorch
+or Hugging Face models, wrap the model in such a function (tokens to ids inside).</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;spacy&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>layers</code>
+            </td>
+            <td>
+                  <code>layers to combine, shallowest first (spaCy: default &#34;block2&#34;, &#34;block3&#34;, &#34;block4&#34;)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>k</code>
+            </td>
+            <td>
+                  <code>number of concepts per projector (20 by default: text needs more than images)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>20</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>tokenizer</code>
+            </td>
+            <td>
+                  <code>function text -&gt; tokens (spaCy&#39;s with model=&#34;spacy&#34;, else words and punctuation)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>window</code>
+            </td>
+            <td>
+                  <code>None (whole document) or a window length in tokens</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>n_words</code>
+            </td>
+            <td>
+                  <code>characteristic words shown per concept</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>6</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>Other</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="attributes-(after-fitting)" open>
+  <summary>Attributes (after fitting)</summary>
+  <p>prototypes, palette, classes, correlation, fitted : as in <code>NAVEImage</code>
+span_counts : (K,) number of spans (runs of consecutive tokens) of each concept
+mean_runs : (K,) mean number of consecutive tokens with the concept
+words : for each concept, its characteristic words (frequency in the concept relative to overall)
+spans : for each concept, its closest spans to the prototype: (tokens with context, start, end)</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEText.update_spans" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">update_spans</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Recompute span counts, mean runs, characteristic words and closest spans on <code>texts</code>.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.NAVEText.summarize" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">summarize</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">saliency</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">saliency_range</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>The figure for one document: the text wrapped, each token on its concept's colour,
+the background's opacity = certainty; with saliency=True, the font size shows the
+saliency's magnitude and black / white its sign. Then the correlation of the concepts
+with the classes, and one row per concept: colour | spans and mean run | characteristic
+words | two closest spans in context.
+label : the document's true class, shown with the model's prediction (when it predicts).
+saliency_range : (vmin, vmax) of the saliency colours (default (-1, 1): saliency is a
+    cosine), or "auto": centred on 0, up to the item's largest |saliency|</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.TextExplanation"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai._sequence.SequenceExplanation">SequenceExplanation</span></code></p>
+
+
+
+        <p><code>tokens</code>, <code>explanation</code> (n_tokens,) the concept of every token, <code>uncertainty</code> or None, <code>K</code>;
+<code>segments()</code> (runs of tokens with the same concept) and <code>border()</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="images-models">Images (models)</h2>
+<h2 id="models">Models</h2>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="nave_xai.models.available"></a>
+    <div class="doc doc-contents first">
+
+        <p>Built-in models, their blocks and the trainings with weights.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>nave.models.available()["vits16"]
+{'blocks': 12, 'trainings': ('random', 'imagenet', 'dino'), 'default_blocks': [12]}</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="nave_xai.download_weights"></a>
+    <div class="doc doc-contents first">
+
+        <p>Download a built-in model's pretrained weights now, and return where they are.</p>
+<p>nave-xai otherwise downloads them the first time a model needs them; call this ahead of time,
+for instance before working offline. They are kept in <code>cache_dir()</code> (<code>NAVE_XAI_CACHE</code> sets it).</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from nave_xai import download_weights
+download_weights("vitt16", "imagenet")        # ViT-Ti/16, about 11 MB, once</p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.backbone.Backbone"></a>
+    <div class="doc doc-contents first">
+
+
+
+        <p>Base class. Subclasses set <code>blocks</code> (names, shallow to deep) and implement <strong>call</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.models.backbone.Backbone.resolve_blocks" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">resolve_blocks</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Block names, shallowest first, from None, ints (1-based), names or paper notation.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.models.backbone.Backbone.head" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">head</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>{"weight": (classes, C), "bias": (classes,) or None} of the model's classifier, or None.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.models.backbone.Backbone.head_features" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">head_features</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Deepest block features (C, h, w) as the classifier sees them (e.g. after a final norm).</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="nave_xai.models.backbone.Backbone.logits" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">logits</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">valid</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Class scores for the image, or None when unknown. <code>valid</code> = (rows, cols) of the
+deepest grid that cover the image (the rest is padding).</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.torch_backbone.TorchBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="nave_xai.models.backbone.Backbone" href="#nave_xai.models.backbone.Backbone">Backbone</a></code></p>
+
+
+
+        <p>Wrap a <code>torch.nn.Module</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>module</code>
+            </td>
+            <td>
+                  <code>the model (put in eval mode; gradients are not tracked)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mean</code>
+            </td>
+            <td>
+                  <code>input normalisation (default: ImageNet)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code><span title="nave_xai.models.backbone.IMAGENET_MEAN">IMAGENET_MEAN</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>std</code>
+            </td>
+            <td>
+                  <code>input normalisation (default: ImageNet)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code><span title="nave_xai.models.backbone.IMAGENET_MEAN">IMAGENET_MEAN</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>multiple</code>
+            </td>
+            <td>
+                  <code>input sides must be multiples of this (e.g. 32 for CNNs, the patch size for ViTs)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>32</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fixed_size</code>
+            </td>
+            <td>
+                  <code>(height, width) if the model only accepts one input size</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>patch_size</code>
+            </td>
+            <td>
+                  <code>for token outputs; default: found from the number of tokens</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>prefix_tokens</code>
+            </td>
+            <td>
+                  <code>class/register tokens before the patch tokens; default: found automatically</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>classifier</code>
+            </td>
+            <td>
+                  <code>classifier for saliency: a module name (e.g. &#34;fc&#34;, &#34;head&#34;), a torch.nn.Linear,</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>or None to look for a Linear named fc / head / classifier</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>final_norm</code>
+            </td>
+            <td>
+                  <code>module name of the norm applied before the classifier (e.g. &#34;norm&#34;), if any</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+                  <code>(cpu, cuda, ...)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>&#39;cpu&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.OnnxBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="nave_xai.models.backbone.Backbone" href="#nave_xai.models.backbone.Backbone">Backbone</a></code></p>
+
+
+
+        <p>Any ONNX model whose outputs are block feature maps (1, C, h, w).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code>the .onnx file; its first input takes the normalised image (1, 3, H, W)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>blocks</code>
+            </td>
+            <td>
+                  <code>output names to use as blocks, shallow to deep (default: all outputs)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mean</code>
+            </td>
+            <td>
+                  <code>input normalisation (default: ImageNet)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code><span title="nave_xai.models.backbone.IMAGENET_MEAN">IMAGENET_MEAN</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>std</code>
+            </td>
+            <td>
+                  <code>input normalisation (default: ImageNet)</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code><span title="nave_xai.models.backbone.IMAGENET_MEAN">IMAGENET_MEAN</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>multiple</code>
+            </td>
+            <td>
+                  <code>input sides must be multiples of this</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>32</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>fixed_size</code>
+            </td>
+            <td>
+                  <code>(height, width) if the model only accepts one size</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.FunctionBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="nave_xai.models.backbone.Backbone" href="#nave_xai.models.backbone.Backbone">Backbone</a></code></p>
+
+
+
+        <p>Wrap a function <code>fn(x) -&gt; {name: (1, C, h, w)}</code> or a list of such arrays.</p>
+<p>Use it for any framework (JAX, TensorFlow, ...): convert inside <code>fn</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="sequence-models">Sequence models</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.sequence.FunctionSequenceBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai.models.sequence.SequenceBackbone">SequenceBackbone</span></code></p>
+
+
+
+        <p>Any function: fn(x) -&gt; {name: (C, t) or (1, C, t) array, ..., optional "logits"}.</p>
+<p>For series, x is a float32 (1, C, T) array; for text, a list of tokens.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.sequence.TorchSequenceBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai.models.sequence.SequenceBackbone">SequenceBackbone</span></code></p>
+
+
+
+        <p>A PyTorch model. Layers are module names; their outputs are captured with forward hooks.</p>
+<p>channels_last : False for convolutional layers ((N, C, t), default), True for transformer
+    layers ((N, t, C)); prefix_tokens : leading tokens to drop (class tokens)
+The model's own output is used as class scores when it is 2D (N, classes).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.models.sequence.OnnxSequenceBackbone"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="nave_xai.models.sequence.SequenceBackbone">SequenceBackbone</span></code></p>
+
+
+
+        <p>An ONNX file whose first input takes (1, C, T) and whose named outputs are (1, C_b, t_b).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="warnings">Warnings</h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="nave_xai.NaveMemoryWarning"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="UserWarning">UserWarning</span></code></p>
+
+
+
+        <p>The run may need more memory than is currently free.</p>
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
