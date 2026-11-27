@@ -26,6 +26,7 @@ NAVE as a diagnostic tool, following Sections 4 and 5 of the paper:
 | [`06_concept_features`](inspecting/06_concept_features.ipynb) | Are concept proportions enough for a classifier probe? |
 | [`07_localization`](inspecting/07_localization.ipynb) | Can a concept's region localize an object? |
 | [`08_uncertainty`](inspecting/08_uncertainty.ipynb) | Where does the encoder hesitate between concepts? |
+| [`09_causality`](inspecting/09_causality.ipynb) | Do the concepts that come with a class actually drive its score? Interventions in a ResNet50 and a ViT-S/16 (PyTorch) |
 
 The first run downloads the pretrained weights. Every notebook has a `TRAINING` (or `DINO`)
 setting at the top; set it to `"random"` to try it without downloading.
