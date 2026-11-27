@@ -1,9 +1,13 @@
 # Changelog
 
-## 0.1.3
+## 0.1.4
 
 - `notebooks/inspecting/09_causality.ipynb`: concepts' causal effects on predictions, by interventions
   (resampling ablation with a random-token control), against their correlation, for a ResNet50 and a ViT-S/16.
+- Docs: the causality notebook in Inspecting models, with a short section on the method.
+
+## 0.1.3
+
 - README: absolute links, so they also work on PyPI.
 
 ## 0.1.2

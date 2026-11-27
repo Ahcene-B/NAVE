@@ -22,7 +22,7 @@ from .image import ImageExplanation, NAVEImage
 from .series import NAVESeries, SeriesExplanation
 from .text import NAVEText, TextExplanation
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 __all__ = ["NAVEImage", "ImageExplanation", "NAVESeries", "SeriesExplanation", "NAVEText", "TextExplanation",
            "models", "NaveMemoryWarning", "__version__"]
