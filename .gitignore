@@ -10,3 +10,12 @@ site/
 
 # shipped weights: made by tools/fetch_shipped_weights.py before building, not committed
 src/nave_xai/models/weights/*.npz
+
+# what the notebooks download or write when they run
+data/
+*.gif
+*.mp4
+*.pt
+*.pth
+*.ckpt
+checkpoints/

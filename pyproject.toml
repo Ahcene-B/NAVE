@@ -51,7 +51,10 @@ artifacts = ["src/nave_xai/models/weights/*.npz"]      # shipped weights: git-ig
 packages = ["src/nave_xai"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "tests", "docs", "notebooks", "tools", "README.md", "LICENSE", "CITATION.cff", "CHANGELOG.md", "RELEASING.md", "mkdocs.yml"]
+# the notebooks themselves only: never the data they download or the files they write
+include = ["src", "tests", "docs", "tools", "notebooks/**/*.ipynb", "notebooks/**/*.md", "notebooks/**/*.py",
+           "README.md", "LICENSE", "CITATION.cff", "CHANGELOG.md", "RELEASING.md", "mkdocs.yml"]
+exclude = ["**/data/", "**/.ipynb_checkpoints/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

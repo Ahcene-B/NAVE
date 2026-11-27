@@ -2,6 +2,8 @@
 
 ## 0.1.4
 
+- Packaging: the source archive holds the notebooks only, not the data they download or the files they
+  write (`.gitignore` excludes those too).
 - `notebooks/inspecting/09_causality.ipynb`: concepts' causal effects on predictions, by interventions
   (resampling ablation with a random-token control), against their correlation, for a ResNet50 and a ViT-S/16.
 - Docs: the causality notebook in Inspecting models, with a short section on the method.
