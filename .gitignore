@@ -8,9 +8,6 @@ site/
 .pytest_cache/
 .venv/
 
-# shipped weights: made by tools/fetch_shipped_weights.py before building, not committed
-src/nave_xai/models/weights/*.npz
-
 # what the notebooks download or write when they run
 data/
 *.gif
@@ -19,3 +16,6 @@ data/
 *.pth
 *.ckpt
 checkpoints/
+
+# weights fetched by older versions' tools: never committed, never packaged
+src/nave_xai/models/weights/

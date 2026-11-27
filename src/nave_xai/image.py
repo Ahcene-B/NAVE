@@ -2,7 +2,7 @@
 """`NAVEImage`: concepts extracted from a vision encoder's activations, and the explanations they give.
 
     >>> from nave_xai import NAVEImage
-    >>> explainer = NAVEImage()                       # ViT-Ti/16, ImageNet weights shipped with the package
+    >>> explainer = NAVEImage()                       # ViT-Ti/16, ImageNet weights (downloaded once)
     >>> exp = explainer.explain(image)           # fits on this image, then explains it
     >>> exp.explanation                          # (H, W) concept of every pixel
 
@@ -72,7 +72,7 @@ class NAVEImage(_ConceptsBase):
 
     Parameters
     ----------
-    model : "vitt16" (ViT-Ti/16, shipped), "resnet18", "resnet50", "vits16", a torch.nn.Module,
+    model : "vitt16" (ViT-Ti/16, the default), "resnet18", "resnet50", "vits16", a torch.nn.Module,
         a Backbone, a path to an .onnx file, or a function returning feature maps
     training : weights of a built-in model: "random", "imagenet" or "dino" (vitt16: random, imagenet)
     layers : built-in models: numbers (``[3, 4]``) or paper notation (``"N34"``, ``"N:9-12"``);

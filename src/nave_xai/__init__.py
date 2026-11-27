@@ -17,12 +17,13 @@ Please cite the paper if you use this package in your work.
     >>> exp.explanation          # (H, W) concept of every pixel
 """
 from . import models
+from .models.weights import download_weights
 from .memory import NaveMemoryWarning
 from .image import ImageExplanation, NAVEImage
 from .series import NAVESeries, SeriesExplanation
 from .text import NAVEText, TextExplanation
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
-__all__ = ["NAVEImage", "ImageExplanation", "NAVESeries", "SeriesExplanation", "NAVEText", "TextExplanation",
+__all__ = ["download_weights", "NAVEImage", "ImageExplanation", "NAVESeries", "SeriesExplanation", "NAVEText", "TextExplanation",
            "models", "NaveMemoryWarning", "__version__"]

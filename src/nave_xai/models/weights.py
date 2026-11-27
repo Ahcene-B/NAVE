@@ -44,11 +44,6 @@ DOWNLOADS[("resnet50", "dino")] = \
 HEADS = {"resnet18": ("fc.weight", "fc.bias", None), "resnet50": ("fc.weight", "fc.bias", None),
          "vits16": ("head.weight", "head.bias", "norm"), "vitt16": ("head.weight", "head.bias", "norm")}
 
-# Weights shipped inside the package (float16 .npz, made by tools/fetch_shipped_weights.py)
-SHIPPED_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "weights")
-SHIPPED = {("vitt16", "imagenet"): "vitt16_imagenet.npz"}
-
-
 def cache_dir():
     """Where nave-xai keeps downloaded weights (NAVE_XAI_CACHE overrides it)."""
     if os.environ.get("NAVE_XAI_CACHE"):
@@ -255,9 +250,6 @@ def download(url, dest, progress=None):
 
 def checkpoint_path(model, training, progress=None):
     """Path of a local checkpoint for (model, training), downloading it if needed."""
-    shipped = SHIPPED.get((model, training))
-    if shipped and os.path.exists(os.path.join(SHIPPED_DIR, shipped)):
-        return os.path.join(SHIPPED_DIR, shipped)
     if (model, training) not in DOWNLOADS:
         raise ValueError(f"There are no {training!r} weights for {model!r}.")
     url = DOWNLOADS[(model, training)]
@@ -308,3 +300,15 @@ def pretrained_weights(model, training, spec, progress=None):
             head["norm_weight"] = raw[head_names[2] + ".weight"].astype(np.float32)
             head["norm_bias"] = raw[head_names[2] + ".bias"].astype(np.float32)
     return weights, head
+
+
+def download_weights(model="vitt16", training="imagenet", progress=None):
+    """Download a built-in model's pretrained weights now, and return where they are.
+
+    nave-xai otherwise downloads them the first time a model needs them; call this ahead of time,
+    for instance before working offline. They are kept in `cache_dir()` (`NAVE_XAI_CACHE` sets it).
+
+    >>> from nave_xai import download_weights
+    >>> download_weights("vitt16", "imagenet")        # ViT-Ti/16, about 11 MB, once
+    """
+    return checkpoint_path(model, training, progress)

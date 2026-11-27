@@ -18,7 +18,7 @@ and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
 ## Install
 
 ```bash
-pip install nave-xai               # works offline: ViT-Ti/16 (ImageNet) is shipped with the package
+pip install nave-xai               # ViT-Ti/16 (ImageNet) weights download on first use, about 11 MB
 pip install "nave-xai[torch]"      # explain your own PyTorch models (GPU too)
 ```
 
@@ -75,7 +75,7 @@ See [Time series](https://github.com/Ahcene-B/NAVE/blob/main/docs/series.md) and
 
 | Model | Trainings | Layers by default |
 |---|---|---|
-| `"vitt16"` (ViT-Ti/16, shipped) | random, imagenet | N:12 (last block) |
+| `"vitt16"` (ViT-Ti/16, default) | random, imagenet | N:12 (last block) |
 | `"resnet18"`, `"resnet50"` | random, imagenet (+ dino for ResNet50) | N34 |
 | `"vits16"` (ViT-S/16) | random, imagenet, dino | N:12 |
 
@@ -151,7 +151,7 @@ We thank Ulf Brefeld (Leuphana University Lüneburg) for lending us the computin
 nave-xai is released under the MIT license (see `LICENSE`). Pretrained weights keep their own
 licenses:
 
-- ViT-Ti/16 (shipped) and ViT-S/16 ImageNet: Touvron et al., *Training data-efficient image
+- ViT-Ti/16 and ViT-S/16 ImageNet: Touvron et al., *Training data-efficient image
   transformers* (DeiT, Apache-2.0), via timm
 - ResNet18 / ResNet50 ImageNet: torchvision (BSD-3-Clause), via timm on Hugging Face
 - DINO ResNet50 and ViT-S/16: Caron et al., *Emerging Properties in Self-Supervised Vision

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "nave-xai"
-version = "0.1.4"
+version = "0.1.5"
 description = "NAVE (Neuro-Activated Vision Explanations): concept-based explanations of vision encoders."
 readme = "README.md"
 license = "MIT"
@@ -44,16 +44,16 @@ Homepage = "https://github.com/Ahcene-B/NAVE"
 Documentation = "https://ahcene-b.github.io/NAVE/"
 Paper = "https://doi.org/10.1007/978-3-032-37664-0_26"
 
+
 [tool.hatch.build]
-artifacts = ["src/nave_xai/models/weights/*.npz"]      # shipped weights: git-ignored but packaged
+exclude = ["src/nave_xai/models/weights/"]      # weights download on first use; none are packaged
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nave_xai"]
 
 [tool.hatch.build.targets.sdist]
-# the notebooks themselves only: never the data they download or the files they write
-include = ["src", "tests", "docs", "tools", "notebooks/**/*.ipynb", "notebooks/**/*.md", "notebooks/**/*.py",
-           "README.md", "LICENSE", "CITATION.cff", "CHANGELOG.md", "RELEASING.md", "mkdocs.yml"]
+# the package's source, tests and docs; the notebooks (with their saved outputs) live on GitHub and open in Colab
+include = ["src", "tests", "docs", "tools", "README.md", "LICENSE", "CITATION.cff", "CHANGELOG.md", "RELEASING.md", "mkdocs.yml"]
 exclude = ["**/data/", "**/.ipynb_checkpoints/"]
 
 [tool.pytest.ini_options]

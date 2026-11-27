@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.5
+
+- The package no longer bundles ViT-Ti/16's weights (the wheel was about 10 MB larger): they download on first
+  use (about 11 MB), like the other models' weights.
+- `nave_xai.download_weights(model, training)`: download a built-in model's weights ahead, e.g. before working
+  offline.
+- The source archive leaves the notebooks out (their saved outputs made it 18 MB); they are on GitHub and
+  open in Colab.
+- Releasing: no weights to fetch before building (`tools/fetch_shipped_weights.py` is gone).
+
 ## 0.1.4
 
 - Packaging: the source archive holds the notebooks only, not the data they download or the files they

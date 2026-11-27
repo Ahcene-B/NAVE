@@ -230,3 +230,10 @@ def test_b0_is_the_input_of_block_1(rng):
     pos_y = vit(y, ["b0"])["b0"][0].reshape(192, -1).T - embedding(y)
     assert np.allclose(pos_x, pos_y, atol=1e-4)                         # what remains is the position embedding
     assert vit.resolve_blocks(["b3", "b0", 1]) == ["b0", "b1", "b3"]
+
+
+def test_download_weights_names_what_it_cannot_download():
+    import nave_xai
+    assert callable(nave_xai.download_weights)
+    with pytest.raises(ValueError):
+        nave_xai.download_weights("resnet18", "random")          # random weights have nothing to download

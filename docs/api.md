@@ -22,6 +22,8 @@
 
 ::: nave_xai.models.available
 
+::: nave_xai.download_weights
+
 ::: nave_xai.models.backbone.Backbone
 
 ::: nave_xai.models.torch_backbone.TorchBackbone

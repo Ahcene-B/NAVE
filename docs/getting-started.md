@@ -15,7 +15,7 @@ from matplotlib.image import imread
 from nave_xai import NAVEImage
 
 image = imread("photo.jpg")              # (H, W, 3), uint8 or float in [0, 1]; PIL images work too
-explainer = NAVEImage()                       # ViT-Ti/16 trained on ImageNet, shipped with the package
+explainer = NAVEImage()                       # ViT-Ti/16 trained on ImageNet (weights download once, about 11 MB)
 exp = explainer.explain(image)
 
 plt.imshow(explainer.palette[exp.explanation])   # every concept in its colour
@@ -101,3 +101,15 @@ An image goes through the encoder whole unless its longer side reaches three tim
 input size (672 px for the built-in models). Larger images are processed in overlapping windows,
 so memory stays bounded and the encoder sees them at a scale close to its training. See
 [Memory and large images](memory.md).
+
+## Working offline
+
+Pretrained weights are downloaded the first time a model needs them, then kept in a cache. To download them ahead,
+for instance before working offline:
+
+```python
+from nave_xai import download_weights
+download_weights("vitt16", "imagenet")     # about 11 MB; also "resnet18", "resnet50", "vits16" with "imagenet" or "dino"
+```
+
+The cache is `~/.cache/nave-xai` on Linux (`NAVE_XAI_CACHE` sets another folder).
