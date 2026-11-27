@@ -3,7 +3,7 @@
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ahcene-B/NAVE/blob/main/notebooks/demo.ipynb)
 
 Every notebook runs on Google Colab: open `https://colab.research.google.com/github/Ahcene-B/NAVE/blob/main/notebooks/<path>`
-(for instance `animations/01_encoder_blocks.ipynb`). Its first cell installs nave-xai and what the notebook needs,
+(for instance `animations/01_encoder_blocks.ipynb`). Its first cell installs nave-xai (from PyPI) and what the notebook needs,
 on Colab only; the training notebooks are best run with a GPU (Runtime › Change runtime type).
 
 - `demo.ipynb`: a tour, mostly images, with short series and text sections.

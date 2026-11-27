@@ -1,5 +1,7 @@
 # nave-xai
 
+[![PyPI](https://img.shields.io/pypi/v/nave-xai)](https://pypi.org/project/nave-xai/) [![Python](https://img.shields.io/pypi/pyversions/nave-xai)](https://pypi.org/project/nave-xai/) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Ahcene-B/NAVE/blob/main/LICENSE)
+
 **NAVE explanations of vision encoders: which concepts an encoder extracts, and where.**
 
 `nave-xai` is the official package of **NAVE** (Neuro-Activated Vision Explanations), from
@@ -16,6 +18,8 @@ and architecture-agnostic (CNNs and ViTs), and needs no fine-tuning.
 > **If you use nave-xai in your work, please cite the paper** (see [Citation](#citation)).
 
 ## Install
+
+From [PyPI](https://pypi.org/project/nave-xai/):
 
 ```bash
 pip install nave-xai               # ViT-Ti/16 (ImageNet) weights download on first use, about 11 MB

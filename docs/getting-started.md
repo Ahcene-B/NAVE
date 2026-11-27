@@ -2,8 +2,10 @@
 
 ## Install
 
+nave-xai is on [PyPI](https://pypi.org/project/nave-xai/):
+
 ```bash
-pip install nave-xai               # numpy, onnxruntime, matplotlib; ViT-Ti/16 weights included
+pip install nave-xai               # numpy, onnxruntime, matplotlib; ViT-Ti/16's weights download on first use
 pip install "nave-xai[torch]"      # also your own PyTorch models, GPU
 ```
 

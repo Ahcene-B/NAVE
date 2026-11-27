@@ -30,7 +30,7 @@ decomposes the image, before any classifier. Post-hoc, unsupervised, for CNNs an
     ```
 
 ```bash
-pip install nave-xai
+pip install nave-xai      # from PyPI: https://pypi.org/project/nave-xai/
 ```
 
 ```python
